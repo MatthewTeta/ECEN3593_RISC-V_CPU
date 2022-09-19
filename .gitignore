@@ -1,0 +1,4 @@
+.theia
+**/build
+**/__pycache__
+**/tmp
