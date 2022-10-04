@@ -1,0 +1,425 @@
+In instruction i_btype_branches__opc_bgeu__xpr_general__x_0__relative_addr12__: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_blt__x_0__x_0__relative_addr12__: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_bltu__x_0__x_0__relative_addr12__: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_bltu__xpr_general__x_0__relative_addr12__: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_bne__x_0__x_0__relative_addr12__: note: (BGN589): Has unused operands.
+
+In instruction i_call_reg_alias__simm12__xpr_general__: note: (BGN511): Invalid jump address computation. Address of a jump must be computed from only one input operand.
+
+In instruction i_itype_alu__opc_addi__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_addi__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_andi__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_andi__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_andi__xpr_general__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_ori__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_ori__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_slti__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_slti__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_sltiu__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_sltiu__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_xori__x_0__x_0__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_alu__opc_xori__x_0__xpr_general__simm12__: note: (BGN589): Has unused operands.
+
+In instruction i_itype_jlreg__opc_jalr__x_0__simm12__xpr_general__: note: (BGN511): Invalid jump address computation. Address of a jump must be computed from only one input operand.
+
+In instruction i_itype_jlreg__opc_jalr__xpr_general__simm12__xpr_general__: note: (BGN511): Invalid jump address computation. Address of a jump must be computed from only one input operand.
+
+In instruction i_rtype_alu__opc_add__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_add__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_add__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_and__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_and__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_and__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_and__xpr_general__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_and__xpr_general__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_or__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_or__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_or__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sll__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sll__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sll__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sll__xpr_general__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_slt__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_slt__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_slt__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sltu__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sltu__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sltu__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sltu__xpr_general__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sra__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sra__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sra__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sra__xpr_general__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_srl__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_srl__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_srl__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_srl__xpr_general__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sub__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sub__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_sub__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_xor__x_0__x_0__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_xor__x_0__xpr_general__x_0__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_alu__opc_xor__x_0__xpr_general__xpr_general__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_slli__x_0__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_slli__x_0__xpr_general__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_slli__xpr_general__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srai__x_0__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srai__x_0__xpr_general__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srai__xpr_general__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srli__x_0__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srli__x_0__xpr_general__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_rtype_shift__opc_srli__xpr_general__x_0__uimm5__: note: (BGN589): Has unused operands.
+
+In instruction i_utype_ops__opc_auipc__x_0__uimm20__: note: (BGN589): Has unused operands.
+
+In instruction i_utype_ops__opc_lui__x_0__uimm20__: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_beq__x_0__x_0__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_beq__x_0__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_beq__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bge__x_0__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bge__xpr_general__x_0__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bge__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bgeu__xpr_general__x_0__relative_addr12__immspec_1_: note: (BGN589): Has unused operands.
+
+In instruction i_btype_branches__opc_bgeu__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_blt__x_0__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_blt__xpr_general__x_0__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_blt__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bltu__x_0__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bltu__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_btype_branches__opc_bne__xpr_general__xpr_general__relative_addr12__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_call_alias__relative_addr20__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_jtype_jlink__opc_jal__xpr_general__relative_addr20__immspec_1_: note: (BGN506): Jumping on an invalid target.
+
+In instruction i_itype_jlreg__opc_jalr__xpr_general__simm12__xpr_general__immspec_1_: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+In instruction i_jal_abs_calias__opc_jal__xpr_general__relative_addr20__: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+In instruction i_jtype_jlink__opc_jal__xpr_general__relative_addr20__: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+In instruction i_itype_jlreg__opc_jalr__xpr_general__simm12__x_0__: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+In instruction i_utype_ops__opc_auipc__xpr_general__uimm20__: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+In instruction i_utype_ops__opc_auipc__xpr_general__uimm20__immspec_1_: note: (BGN545): The instruction contains invalid operation ('GET_PC') even after the high-level analysis. The semantic pattern will be commented out.
+
+note: (BGN536): There's no support for 'truncate store' over type 'i32 to i1' (with all operands being registers). The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(brcond (i32 (setgt i32 CopyFromReg, imm)), BasicBlock)' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(brcond (i32 (setle i32 CopyFromReg, imm)), BasicBlock)' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(brcond (i32 (setugt i32 CopyFromReg, imm)), BasicBlock)' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(brcond (i32 (setule i32 CopyFromReg, imm)), BasicBlock)' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (seteq i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setne i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setge i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setgt i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setle i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setlt i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setuge i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setugt i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setule i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, imm)), i32 CopyFromReg, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, imm)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, imm)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, imm)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, CopyFromReg)), i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, CopyFromReg)), i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select (i32 (setult i32 CopyFromReg, CopyFromReg)), i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select i32 CopyFromReg, i32 imm, CopyFromReg)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select i32 CopyFromReg, i32 imm, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(select i32 CopyFromReg, i32 CopyFromReg, imm)' for type(s) 'i32:i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(i32 (setgt i32 CopyFromReg, imm))' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(i32 (setle i32 CopyFromReg, imm))' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(i32 (setugt i32 CopyFromReg, imm))' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+
+note: (BGN539): Failed to find realization of operation '(i32 (setule i32 CopyFromReg, imm))' for type(s) 'i32'.
+The compiler can be generated, but compilation may fail if such an operation is needed in the compiled C/C++ code.
+

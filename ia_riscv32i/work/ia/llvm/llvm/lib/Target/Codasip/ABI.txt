@@ -1,0 +1,294 @@
+***************************************************
+** Description of ABI for ia_riscv32i.ia *
+***************************************************
+
+=== Usage of registers ===
+
+Stack pointer: rf_xpr_2
+Base pointer: rf_xpr_8
+Return address: rf_xpr_1
+Callee saved registers: rf_xpr_9 rf_xpr_18 rf_xpr_19 rf_xpr_20 rf_xpr_21 rf_xpr_22 rf_xpr_23 rf_xpr_24 rf_xpr_25 rf_xpr_26 rf_xpr_27
+Pointer-type argument registers: rf_xpr_10 rf_xpr_11 rf_xpr_12 rf_xpr_13 rf_xpr_14 rf_xpr_15 rf_xpr_16 rf_xpr_17
+Pointer-type return value registers: rf_xpr_10 rf_xpr_11 rf_xpr_12 rf_xpr_13 rf_xpr_14 rf_xpr_15 rf_xpr_16 rf_xpr_17
+
+=== Datalayout ===
+
+e-p:32:32:32-S64-a:0:32-v8:8:8-i8:8:8-v16:16:16-i16:16:16-f16:16:16-v32:32:32-i32:32:32-f32:32:32-v64:32:32-i64:32:32-f64:32:32-v128:32:32-i128:32:32-f128:32:32-v256:32:32-i256:32:32-v512:32:32-i512:32:32-v1024:32:32-i1024:32:32-v2048:32:32-i2048:32:32-n32
+
+=== User-defined ABI ===
+
+Stack pointer: rf_xpr_2
+Base pointer: rf_xpr_8
+Return address: rf_xpr_1
+Callee saved registers: rf_xpr_9 rf_xpr_18 rf_xpr_19 rf_xpr_20 rf_xpr_21 rf_xpr_22 rf_xpr_23 rf_xpr_24 rf_xpr_25 rf_xpr_26 rf_xpr_27
+
+
+=== Architecture information as seen by backendgen ===
+
+Note: '-unknown' means that the instruction or resource was either not found, or it was not analyzed yet due to a previous error.
+
+allocable registers: 
+  - rf_xpr_8, rf_xpr_9, rf_xpr_15, rf_xpr_14, rf_xpr_13, rf_xpr_12, rf_xpr_11, rf_xpr_10, rf_xpr_1, rf_xpr_3, 
+  rf_xpr_4, rf_xpr_5, rf_xpr_6, rf_xpr_7, rf_xpr_16, rf_xpr_17, rf_xpr_18, rf_xpr_19, rf_xpr_20, rf_xpr_21, 
+  rf_xpr_22, rf_xpr_23, rf_xpr_24, rf_xpr_25, rf_xpr_26, rf_xpr_27, rf_xpr_29
+
+Pointer:
+  data type: i32
+  bit width: 32
+  abi alignment: 32
+  reg. class: xpr_general
+
+Basic data types info:
+  int: bit width = 32, abi alignment = 32
+  long: bit width = 32, abi alignment = 32
+  long long: bit width = 64, abi alignment = 32
+
+Stack: 
+  direction: down
+  address space-alignment: 0-64 bits
+
+Explicitly legal data types: 
+i32 
+Legal data types: 
+  i32 : abi alignment = 32, representative register class: xpr_general
+Other data types from datalayout:
+  i32: bit width = 32, abi alignment = 32
+  i8: bit width = 8, abi alignment = 8
+  i16: bit width = 16, abi alignment = 16
+  f64: bit width = 64, abi alignment = 32
+  i64: bit width = 64, abi alignment = 32
+  v1i128: bit width = 128, abi alignment = 32
+  v1i256: bit width = 256, abi alignment = 32
+  i128: bit width = 128, abi alignment = 32
+  f128: bit width = 128, abi alignment = 32
+  i256: bit width = 256, abi alignment = 32
+  v1i64: bit width = 64, abi alignment = 32
+  v1i8: bit width = 8, abi alignment = 8
+  v1i16: bit width = 16, abi alignment = 16
+  f16: bit width = 16, abi alignment = 16
+  v1i32: bit width = 32, abi alignment = 32
+  f32: bit width = 32, abi alignment = 32
+  i512: bit width = 512, abi alignment = 32
+  v1i1024: bit width = 1024, abi alignment = 32
+  v1i2048: bit width = 2048, abi alignment = 32
+  i1024: bit width = 1024, abi alignment = 32
+  i2048: bit width = 2048, abi alignment = 32
+  v1i512: bit width = 512, abi alignment = 32
+
+little endian
+
+Physical register classes:
+  rf_xpr , size of class in bits: 32
+  contains registers: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+  20 21 22 23 24 25 26 27 28 29 30 31 
+
+Logical register classes:
+  xpr_general is general reg. class , corresponds to hardware reg. class rf_xpr , contains types: i32 
+  contains registers: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 
+  21 22 23 24 25 26 27 28 29 30 31 
+
+Important registers:
+  stack pointer for address space 0 is rf_xpr_2
+  base pointer for address space 0 is rf_xpr_8
+  Return address register is rf_xpr_1
+  Return address register for library save/restore of callee saved registers is rf_xpr_5
+Registers for:
+  called saved: rf_xpr_9 rf_xpr_18 rf_xpr_19 rf_xpr_20 rf_xpr_21 rf_xpr_22 rf_xpr_23 rf_xpr_24 rf_xpr_25 rf_xpr_26 rf_xpr_27
+  unused registers: rf_xpr_3 rf_xpr_4 rf_xpr_30 rf_xpr_31
+  parameter passing: rf_xpr_10 rf_xpr_11 rf_xpr_12 rf_xpr_13 rf_xpr_14 rf_xpr_15 rf_xpr_16 rf_xpr_17
+  function results: rf_xpr_10 rf_xpr_11 rf_xpr_12 rf_xpr_13 rf_xpr_14 rf_xpr_15 rf_xpr_16 rf_xpr_17
+Flag registers:
+
+Schedule info:
+  schedule class: sc_load, latency: 2, delay slot: false, destination reg. classes: rf_xpr 
+
+Number of vliw slots: 1
+
+--------------------- MANDATORY INSTRUCTIONS --------------------
+
+Unconditional jumps and calls:
+  jump direct:
+    absolute    - jal x0, $imm_0 (i_jal_abs_calias__opc_jal__x_0__relative_addr20__)
+    absolute    - jal $reg_0, $imm_1 (i_jal_abs_calias__opc_jal__xpr_general__relative_addr20__)
+    relative    - jal x0 ,  $imm_0 (i_jtype_jlink__opc_jal__x_0__relative_addr20__)
+    relative    - jal $reg_0 ,  $imm_1 (i_jtype_jlink__opc_jal__xpr_general__relative_addr20__)
+    relative    - beq x0, x0, $imm_0 (i_btype_branches__opc_beq__x_0__x_0__relative_addr12__)
+    relative    - bge x0, x0, $imm_0 (i_btype_branches__opc_bge__x_0__x_0__relative_addr12__)
+    relative    - bgeu x0, x0, $imm_0 (i_btype_branches__opc_bgeu__x_0__x_0__relative_addr12__)
+    absolute    - jalr x0 ,  $imm_0 ( x0 ) (i_itype_jlreg__opc_jalr__x_0__simm12__x_0__)
+    absolute    - jalr $reg_0 ,  $imm_1 ( x0 ) (i_itype_jlreg__opc_jalr__xpr_general__simm12__x_0__)
+  jump indirect:
+    absolute    - ret (i_ret_alias__)
+    absolute    -  (i_itype_jlreg__opc_jalr__x_0__simm12__xpr_general__immspec_1_)
+    absolute    -  (i_itype_jlreg__opc_jalr__xpr_general__simm12__xpr_general__immspec_1_)
+  call direct:
+    relative    - call $imm_0 (i_call_alias__relative_addr20__)
+    absolute    - call_reg, $imm_0 ( x0 ) (i_call_reg_alias__simm12__x_0__)
+    absolute    -  (i_jal_abs_calias__opc_jal__x_0__relative_addr20__TAILCALL_CLONE_)
+    relative    -  (i_jtype_jlink__opc_jal__x_0__relative_addr20__TAILCALL_CLONE_)
+    relative    -  (i_btype_branches__opc_beq__x_0__x_0__relative_addr12__TAILCALL_CLONE_)
+    relative    -  (i_btype_branches__opc_bge__x_0__x_0__relative_addr12__TAILCALL_CLONE_)
+    relative    -  (i_btype_branches__opc_bgeu__x_0__x_0__relative_addr12__TAILCALL_CLONE_)
+    absolute    -  (i_itype_jlreg__opc_jalr__x_0__simm12__x_0__TAILCALL_CLONE_)
+  call indirect:
+    absolute    -  (i_call_reg_alias__simm12__xpr_general__immspec_1_)
+    absolute    -  (i_ret_alias__TAILCALL_CLONE_)
+    absolute    -  (i_itype_jlreg__opc_jalr__x_0__simm12__xpr_general__immspec_1_TAILCALL_CLONE_)
+
+Essential instructions for stack manipulation:
+  load (through SP) to return address register: 
+    - lw $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__)
+    -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__3_BIGIMM_EMUL_)
+    -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__5_BIGIMM_EMUL_)
+  store (through SP) return address register:
+    - sw $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__)
+    -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__1_BIGIMM_EMUL_)
+    -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__4_BIGIMM_EMUL_)
+  store base register through stack pointer (address space: 0, 0, 0):
+    - sw $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__)
+    -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__1_BIGIMM_EMUL_)
+    -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__4_BIGIMM_EMUL_)
+  load base register through stack pointer (address space: 0, 0, 0):
+    - lw $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__)
+    -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__3_BIGIMM_EMUL_)
+    -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__5_BIGIMM_EMUL_)
+  add signed constant to stack register (address space: 0, 0, 0, 0):
+    - addi $reg_0 ,  $reg_1 ,  $imm_2 (i_itype_alu__opc_addi__xpr_general__xpr_general__simm12__)
+    -  (i_itype_alu__opc_addi__xpr_general__xpr_general__simm12__6_BIGIMM_EMUL_)
+    -  (i_itype_alu__opc_addi__xpr_general__xpr_general__simm12__7_BIGIMM_EMUL_)
+    -  (i_itype_alu__opc_addi__xpr_general__xpr_general__simm12__8_BIGIMM_EMUL_)
+  add register to base/stack pointer (address space: 0):
+    - add $reg_0 ,  $reg_1 ,  $reg_2 (i_rtype_alu__opc_add__xpr_general__xpr_general__xpr_general__)
+  sub register from base/stack pointer (address space: 0):
+    - sub $reg_0 ,  $reg_1 ,  $reg_2 (i_rtype_alu__opc_sub__xpr_general__xpr_general__xpr_general__)
+ add base pointer to auxiliary register (address space: ):
+    -unknown
+
+Load pointer wide constant: 
+  !This is just estimate!
+addi $reg_0 ,  x0 ,  $imm_1 (i_itype_alu__opc_addi__xpr_general__x_0__simm12__)
+  !This is just estimate!
+ori $reg_0 ,  x0 ,  $imm_1 (i_itype_alu__opc_ori__xpr_general__x_0__simm12__)
+  !This is just estimate!
+xori $reg_0 ,  x0 ,  $imm_1 (i_itype_alu__opc_xori__xpr_general__x_0__simm12__)
+  !This is just estimate!
+lui $reg_0 ,  $imm_1 (i_utype_ops__opc_lui__xpr_general__uimm20__)
+  !This is just estimate!
+ (e_movi32__)
+
+Moves between registers:
+  classes xpr_general - xpr_general
+    - add $reg_0 ,  x0 ,  $reg_1 (i_rtype_alu__opc_add__xpr_general__x_0__xpr_general__)
+
+Instructions for spilling and reloading:
+  spill xpr_general:
+    - sw $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__)
+  reload xpr_general:
+    - lw $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__)
+
+----------------- OTHER IMPORTANT INSTRUCTIONS ------------------
+
+Conditional jumps:
+  jump direct, relative 
+    - beq x0, $reg_0, $imm_1 (i_btype_branches__opc_beq__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - beq $reg_0, x0, $imm_1 (i_btype_branches__opc_beq__xpr_general__x_0__relative_addr12__)
+  jump direct, relative 
+    - beq $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_beq__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bge x0, $reg_0, $imm_1 (i_btype_branches__opc_bge__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bge $reg_0, x0, $imm_1 (i_btype_branches__opc_bge__xpr_general__x_0__relative_addr12__)
+  jump direct, relative 
+    - bge $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_bge__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bgeu x0, $reg_0, $imm_1 (i_btype_branches__opc_bgeu__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bgeu $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_bgeu__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - blt x0, $reg_0, $imm_1 (i_btype_branches__opc_blt__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - blt $reg_0, x0, $imm_1 (i_btype_branches__opc_blt__xpr_general__x_0__relative_addr12__)
+  jump direct, relative 
+    - blt $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_blt__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bltu x0, $reg_0, $imm_1 (i_btype_branches__opc_bltu__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bltu $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_bltu__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bne x0, $reg_0, $imm_1 (i_btype_branches__opc_bne__x_0__xpr_general__relative_addr12__)
+  jump direct, relative 
+    - bne $reg_0, x0, $imm_1 (i_btype_branches__opc_bne__xpr_general__x_0__relative_addr12__)
+  jump direct, relative 
+    - bne $reg_0, $reg_1, $imm_2 (i_btype_branches__opc_bne__xpr_general__xpr_general__relative_addr12__)
+  jump direct, relative 
+    -  (i_btype_branches__opc_bge__xpr_general__xpr_general__relative_addr12__swappedCmpClone0__)
+  jump direct, relative 
+    -  (i_btype_branches__opc_bgeu__xpr_general__xpr_general__relative_addr12__swappedCmpClone0__)
+  jump direct, relative 
+    -  (i_btype_branches__opc_blt__xpr_general__xpr_general__relative_addr12__swappedCmpClone0__)
+  jump direct, relative 
+    -  (i_btype_branches__opc_bltu__xpr_general__xpr_general__relative_addr12__swappedCmpClone0__)
+
+Instructions that internally load value:
+  loads types: i32     - lb $reg_0 ,  $imm_1 ( x0 ) (i_itype_loads__opc_lb__xpr_general__simm12__x_0__)
+  loads types: i32     - lb $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lb__xpr_general__simm12__xpr_general__)
+  loads types: i32     - lbu $reg_0 ,  $imm_1 ( x0 ) (i_itype_loads__opc_lbu__xpr_general__simm12__x_0__)
+  loads types: i32     - lbu $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lbu__xpr_general__simm12__xpr_general__)
+  loads types: i32     - lh $reg_0 ,  $imm_1 ( x0 ) (i_itype_loads__opc_lh__xpr_general__simm12__x_0__)
+  loads types: i32     - lh $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lh__xpr_general__simm12__xpr_general__)
+  loads types: i32     - lhu $reg_0 ,  $imm_1 ( x0 ) (i_itype_loads__opc_lhu__xpr_general__simm12__x_0__)
+  loads types: i32     - lhu $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lhu__xpr_general__simm12__xpr_general__)
+  loads types: i32     - lw $reg_0 ,  $imm_1 ( x0 ) (i_itype_loads__opc_lw__xpr_general__simm12__x_0__)
+  loads types: i32     - lw $reg_0 ,  $imm_1 ( $reg_2 ) (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__)
+  loads types: i32     -  (i_itype_loads__opc_lb__xpr_general__simm12__x_0__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lb__xpr_general__simm12__xpr_general__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lb__xpr_general__simm12__xpr_general__immspec_1_)
+  loads types: i32     -  (i_itype_loads__opc_lb__xpr_general__simm12__xpr_general__immspec_1_AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lbu__xpr_general__simm12__x_0__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lbu__xpr_general__simm12__xpr_general__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lbu__xpr_general__simm12__xpr_general__immspec_1_)
+  loads types: i32     -  (i_itype_loads__opc_lbu__xpr_general__simm12__xpr_general__immspec_1_AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lh__xpr_general__simm12__x_0__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lh__xpr_general__simm12__xpr_general__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lh__xpr_general__simm12__xpr_general__immspec_1_)
+  loads types: i32     -  (i_itype_loads__opc_lh__xpr_general__simm12__xpr_general__immspec_1_AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lhu__xpr_general__simm12__x_0__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lhu__xpr_general__simm12__xpr_general__AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lhu__xpr_general__simm12__xpr_general__immspec_1_)
+  loads types: i32     -  (i_itype_loads__opc_lhu__xpr_general__simm12__xpr_general__immspec_1_AEXT_CLONE_)
+  loads types: i32     -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__immspec_1_)
+  loads types: i32     -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__2_REG_EMUL_)
+  loads types: i32     -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__3_BIGIMM_EMUL_)
+  loads types: i32     -  (i_itype_loads__opc_lw__xpr_general__simm12__xpr_general__5_BIGIMM_EMUL_)
+
+Store instructions:
+  stores types: i8     - sb x0 ,  $imm_0 ( x0 ) (i_stype_store__opc_sb__x_0__simm12__x_0__)
+  stores types: i8     - sb x0 ,  $imm_0 ( $reg_1 ) (i_stype_store__opc_sb__x_0__simm12__xpr_general__)
+  stores types: i32     - sb $reg_0 ,  $imm_1 ( x0 ) (i_stype_store__opc_sb__xpr_general__simm12__x_0__)
+  stores types: i32     - sb $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sb__xpr_general__simm12__xpr_general__)
+  stores types: i16     - sh x0 ,  $imm_0 ( x0 ) (i_stype_store__opc_sh__x_0__simm12__x_0__)
+  stores types: i16     - sh x0 ,  $imm_0 ( $reg_1 ) (i_stype_store__opc_sh__x_0__simm12__xpr_general__)
+  stores types: i32     - sh $reg_0 ,  $imm_1 ( x0 ) (i_stype_store__opc_sh__xpr_general__simm12__x_0__)
+  stores types: i32     - sh $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sh__xpr_general__simm12__xpr_general__)
+  stores types: i32     - sw x0 ,  $imm_0 ( x0 ) (i_stype_store__opc_sw__x_0__simm12__x_0__)
+  stores types: i32     - sw x0 ,  $imm_0 ( $reg_1 ) (i_stype_store__opc_sw__x_0__simm12__xpr_general__)
+  stores types: i32     - sw $reg_0 ,  $imm_1 ( x0 ) (i_stype_store__opc_sw__xpr_general__simm12__x_0__)
+  stores types: i32     - sw $reg_0 ,  $imm_1 ( $reg_2 ) (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__)
+  stores types: i8     -  (i_stype_store__opc_sb__x_0__simm12__xpr_general__immspec_1_)
+  stores types: i32     -  (i_stype_store__opc_sb__xpr_general__simm12__xpr_general__immspec_1_)
+  stores types: i16     -  (i_stype_store__opc_sh__x_0__simm12__xpr_general__immspec_1_)
+  stores types: i32     -  (i_stype_store__opc_sh__xpr_general__simm12__xpr_general__immspec_1_)
+  stores types: i32     -  (i_stype_store__opc_sw__x_0__simm12__xpr_general__immspec_1_)
+  stores types: i32     -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__immspec_1_)
+  stores types: i32     -  (i_stype_store__opc_sb__x_0__simm12__x_0__i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sb__x_0__simm12__xpr_general__i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sh__x_0__simm12__x_0__i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sh__x_0__simm12__xpr_general__i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sb__x_0__simm12__xpr_general__immspec_1_i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sh__x_0__simm12__xpr_general__immspec_1_i32_TRUNC_CLONE_)
+  stores types: i32     -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__0_REG_EMUL_)
+  stores types: i32     -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__1_BIGIMM_EMUL_)
+  stores types: i32     -  (i_stype_store__opc_sw__xpr_general__simm12__xpr_general__4_BIGIMM_EMUL_)
+
+

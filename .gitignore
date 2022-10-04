@@ -2,3 +2,4 @@
 **/build
 **/__pycache__
 **/tmp
+sim_exit_code

@@ -1,0 +1,12 @@
+//================ CODASIP ==========================
+/* Added file Codasip.def with Codasip relocations */
+//===================================================
+
+#ifndef ELF_RELOC
+#error "ELF_RELOC must be defined"
+#endif
+
+ELF_RELOC(R_CODASIP_NONE,            0)
+// Starts after RISC-V relocations
+ELF_RELOC(R_CODASIP_EXPR,            58)
+ELF_RELOC(R_CODASIP_EXPR_S,          59)
