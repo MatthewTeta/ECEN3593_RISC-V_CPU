@@ -124,7 +124,7 @@ _start:
     addi x3, x0, -1
     addi x4, x0, -8
     addi x5, x0, 0xFFF // This is the same as -1
-    srl  x6, x5, 1
+    srli x6, x5, 1
     nop
     nop
     nop
@@ -183,27 +183,40 @@ _start:
     nop
     nop                 // x10 = 0
     // Test sll
-    sll x10, x0, 0              // 0<<0,    x10 = 0
+    // Initialize more test values
+    addi x7, x0, 2              // x7 = 2
     nop
     nop
     nop
-    sll x10, x1, 0              // 1<<0,    x10 = 0
+    addi x8, x0, 31             // x8 = 31
+    nop                 // x7 = 2
+    nop
+    nop
+    addi x9, x0, 32             // x9 = 32
+    nop                 // x8 = 31
+    nop
+    nop
+    sll x10, x0, x0             // 0<<0,    x10 = 0
+    nop                 // x9 = 32
+    nop
+    nop
+    sll x10, x1, x0             // 1<<0,    x10 = 0
     nop                 // x10 = 0
     nop
     nop
-    sll x10, x1, 1              // 1<<1,    x10 = 2
+    sll x10, x1, x1             // 1<<1,    x10 = 2
     nop                 // x10 = 0
     nop
     nop
-    sll x10, x2, 2              // 8<<2,    x10 = 32
+    sll x10, x2, x7             // 8<<2,    x10 = 32
     nop                 // x10 = 2
     nop
     nop
-    sll x10, x1, 31             // 1<<31,   x10 = 0x80000000
+    sll x10, x1, x8             // 1<<31,   x10 = 0x80000000
     nop                 // x10 = 32
     nop
     nop
-    sll x10, x1, 32             // 1<<32,   x10 = 0
+    sll x10, x1, x9             // 1<<32,   x10 = 0
     nop                 // x10 = 0x80000000
     nop
     nop
@@ -291,15 +304,15 @@ _start:
     nop
     nop
     nop
-    srl x10, x1, 0              // 1>>0,        x10 = 1
+    srl x10, x1, x0             // 1>>0,        x10 = 1
     nop                 // x10 = 0
     nop
     nop
-    srl x10, x1, 1              // 1>>1,        x10 = 0
+    srl x10, x1, x1             // 1>>1,        x10 = 0
     nop                 // x10 = 1
     nop
     nop
-    srl x10, x3, 1              // -1>>1,       x10 = 0x7FFFFFFF
+    srl x10, x3, x1             // -1>>1,       x10 = 0x7FFFFFFF
     nop                 // x10 = 0
     nop
     nop
@@ -310,15 +323,15 @@ _start:
     nop
     nop
     nop
-    sra x10, x1, 0              // 1>>0,        x10 = 1
+    sra x10, x1, x0             // 1>>0,        x10 = 1
     nop                 // x10 = 0
     nop
     nop
-    sra x10, x1, 1              // 1>>1,        x10 = 0
+    sra x10, x1, x1             // 1>>1,        x10 = 0
     nop                 // x10 = 1
     nop
     nop
-    sra x10, x3, 1              // -1>>1,       x10 = -1 = 0xFFFFFFFF
+    sra x10, x3, x1             // -1>>1,       x10 = -1 = 0xFFFFFFFF
     nop                 // x10 = 0
     nop
     nop
@@ -397,8 +410,90 @@ _start:
  	nop
  	nop
  /*
- 	Immediate (r-type immediate) ALU operations
+    Immediate (r-type immediate) ALU operations
+    - slli
+    - srli
+    - srai
  */
+    // Test slli
+    // Initialize test values
+    addi x7, x0, 2              // x7 = 2
+    nop
+    nop
+    nop
+    addi x8, x0, 31             // x8 = 31
+    nop                 // x7 = 2
+    nop
+    nop
+    addi x9, x0, 32             // x9 = 32
+    nop                 // x8 = 31
+    nop
+    nop
+    slli x10, x0, 0            // 0<<0,    x10 = 0
+    nop                 // x9 = 32
+    nop
+    nop
+    slli x10, x1, 0            // 1<<0,    x10 = 0
+    nop                 // x10 = 0
+    nop
+    nop
+    slli x10, x1, 1            // 1<<1,    x10 = 2
+    nop                 // x10 = 0
+    nop
+    nop
+    slli x10, x2, 2            // 8<<2,    x10 = 32
+    nop                 // x10 = 2
+    nop
+    nop
+    slli x10, x1, 31           // 1<<31,   x10 = 0x80000000
+    nop                 // x10 = 32
+    nop
+    nop
+    slli x10, x1, 32           // 1<<32,   x10 = 0
+    nop                 // x10 = 0x80000000
+    nop
+    nop
+    nop
+    nop                 // x10 = 0
+    // Test srli
+    addi x10, x0, 0             // Initialize   x10 = 0
+    nop
+    nop
+    nop
+    srli x10, x1, 0             // 1>>0,        x10 = 1
+    nop                 // x10 = 0
+    nop
+    nop
+    srli x10, x1, 1             // 1>>1,        x10 = 0
+    nop                 // x10 = 1
+    nop
+    nop
+    srli x10, x3, 1             // -1>>1,       x10 = 0x7FFFFFFF
+    nop                 // x10 = 0
+    nop
+    nop
+    nop
+    nop                 // x10 = 0x7FFFFFFF
+    // Test srai
+    addi x10, x0, 0             // Initialize   x10 = 0
+    nop
+    nop
+    nop
+    srai x10, x1, 0             // 1>>0,        x10 = 1
+    nop                 // x10 = 0
+    nop
+    nop
+    srai x10, x1, 1             // 1>>1,        x10 = 0
+    nop                 // x10 = 1
+    nop
+    nop
+    srai x10, x3, 1             // -1>>1,       x10 = -1 = 0xFFFFFFFF
+    nop                 // x10 = 0
+    nop
+    nop
+    nop
+    nop                 // x10 = -1 = 0xFFFFFFFF
+    /* End Immediate (r-type immediate) ALU operations */
 	nop
 	nop
 	nop
@@ -415,6 +510,38 @@ _start:
  	addi x3, x0, 2				// load x3 register with 2
  	addi x4, x0, 3				// load x4 register with 3
  	addi x5, x0, -1				// load x5 register with -1
+    addi x10, x0, 1             // Initialize   x10 = 1
+    nop
+    nop
+    nop
+    nop
+    nop                 // x10 = 1
+
+    // Read after Write 1
+    add x10, x2, x5             // -1+1,        x10 = 0
+    add x10, x10, x2            // 0+1,         x10 = 1
+    nop
+    nop
+    nop
+    nop
+    nop
+    // Read after Write 2
+    add x10, x2, x5             // -1+1,        x10 = 0
+    nop
+    add x10, x10, x2            // 0+1,         x10 = 1
+    nop
+    nop
+    nop
+    nop
+    // Read after Write 3
+    add x10, x2, x5             // -1+1,        x10 = 0
+    nop
+    nop
+    add x10, x10, x2            // 0+1,         x10 = 1
+    nop
+    nop
+    nop
+
 	nop
 	nop
 	nop
