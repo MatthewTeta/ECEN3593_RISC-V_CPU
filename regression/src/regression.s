@@ -553,14 +553,24 @@ _start:
  	nop
  /*
  	Branch (b-type) operations
+    - beq
+    - bne
+    - blt
+    - bge
+    - bltu
+    - bgeu
  */
-
+    addi x1, x0, 1
+    addi x3, x0, -1
+    # // Initialize Loop iterator
+    # addi x11, x0, N
 	nop
 	nop
 	nop
 	nop
-	beq x0, x0, PASS
-BRANCH_FAIL:
+TEST0:
+	beq x0, x0, PASS0           // beq+,        ->PASS0
+BRANCH_FAIL0:
 	nop
 	nop
 	nop
@@ -570,7 +580,173 @@ BRANCH_FAIL:
 	nop
 	nop
 	nop
-PASS:
+PASS2:
+    beq x3, x3, PASS3           // beq+,        ->PASS3
+    beq x0, x0, BRANCH_FAIL1    // beq+,        ->BRANCH_FAIL1
+PASS1:
+    beq x0, x0, PASS2           // beq-,        ->PASS2
+    beq x0, x0, BRANCH_FAIL1    // beq+,        ->BRANCH_FAIL1
+PASS0:
+    beq x0, x1, BRANCH_FAIL0    // ~beq-,       (NOP)
+    beq x0, x1, BRANCH_FAIL1    // ~beq+,       (NOP)
+    beq x0, x1, BRANCH_FAIL0    // ~beq-,       (NOP)
+    beq x1, x0, BRANCH_FAIL1    // ~beq+,       (NOP)
+    beq x1, x1, PASS1           // beq-,        ->PASS1
+BRANCH_FAIL1:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+    // Test bne
+PASS6:
+    bne x0, x3, PASS7           // bne+,        ->PASS7
+    bne x0, x1, BRANCH_FAIL2    // bne+,        ->BRANCH_FAIL1
+PASS5:
+    bne x3, x0, PASS6           // bne-,        ->PASS6
+    bne x0, x1, BRANCH_FAIL2    // bne+,        ->BRANCH_FAIL1
+PASS3:
+    bne x0, x0, BRANCH_FAIL1    // ~bne-,       (NOP)
+    bne x0, x0, BRANCH_FAIL2    // ~bne+,       (NOP)
+    bne x1, x1, BRANCH_FAIL1    // ~bne-,       (NOP)
+    bne x1, x1, BRANCH_FAIL2    // ~bne+,       (NOP)
+    bne x0, x1, PASS4           // bne+,        ->PASS4
+BRANCH_FAIL2:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+PASS4:
+    bne x1, x0, PASS5           // bne-,        ->PASS5
+BRANCH_FAIL3:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+    // Test blt
+PASS10:
+    blt x0, x3, PASS11          // blt+,        ->PASS11
+    blt x0, x1, BRANCH_FAIL4    // blt+,        ->BRANCH_FAIL1
+PASS9:
+    blt x3, x1, PASS10          // blt-,        ->PASS10
+    blt x0, x1, BRANCH_FAIL4    // blt+,        ->BRANCH_FAIL1
+PASS7:
+    blt x0, x0, BRANCH_FAIL3    // ~blt-,       (NOP)
+    blt x0, x0, BRANCH_FAIL4    // ~blt+,       (NOP)
+    blt x1, x1, BRANCH_FAIL3    // ~blt-,       (NOP)
+    blt x1, x1, BRANCH_FAIL4    // ~blt+,       (NOP)
+    blt x0, x1, PASS8           // blt+,        ->PASS8
+BRANCH_FAIL4:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+PASS8:
+    blt x3, x0, PASS9           // blt-,        ->PASS9
+BRANCH_FAIL5:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+    // Test bge
+PASS14:
+    bge x3, x0, PASS15          // bge+,        ->PASS11
+    bge x1, x0, BRANCH_FAIL6    // bge+,        ->BRANCH_FAIL1
+PASS13:
+    bge x1, x3, PASS14          // bge-,        ->PASS10
+    bge x1, x0, BRANCH_FAIL6    // bge+,        ->BRANCH_FAIL1
+PASS11:
+    bge x0, x0, BRANCH_FAIL5    // ~bge-,       (NOP)
+    bge x0, x0, BRANCH_FAIL6    // ~bge+,       (NOP)
+    bge x1, x1, BRANCH_FAIL5    // ~bge-,       (NOP)
+    bge x1, x1, BRANCH_FAIL6    // ~bge+,       (NOP)
+    bge x1, x0, PASS12          // bge+,        ->PASS8
+BRANCH_FAIL6:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+PASS12:
+    bge x0, x3, PASS13          // bge-,        ->PASS9
+BRANCH_FAIL7:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+	nop
+    // Test bltu
+PASS16:
+    bltu x0, x3, PASS17             // bltu+,       ->PASS17
+PASS15:
+    bltu x0, x0, BRANCH_FAIL7       // ~bltu-,      (NOP)
+    bltu x0, x0, BRANCH_FAIL8       // ~bltu+,      (NOP)
+    bltu x1, x1, BRANCH_FAIL7       // ~bltu-,      (NOP)
+    bltu x1, x1, BRANCH_FAIL8       // ~bltu+,      (NOP)
+    bltu x3, x1, BRANCH_FAIL8       // ~bltu+,      (NOP)
+    bltu x0, x1, PASS16             // bltu-,       ->PASS16 
+BRANCH_FAIL8:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+    // Test bgeu
+PASS18:
+    bgeu x3, x0, PASS19             // bgeu+,       ->PASS19
+PASS17:
+    bgeu x0, x0, BRANCH_FAIL8       // ~bgeu-,      (NOP)
+    bgeu x0, x0, BRANCH_FAIL9       // ~bgeu+,      (NOP)
+    bgeu x1, x1, BRANCH_FAIL8       // ~bgeu-,      (NOP)
+    bgeu x1, x1, BRANCH_FAIL9       // ~bgeu+,      (NOP)
+    bgeu x1, x3, BRANCH_FAIL9       // ~bgeu+,      (NOP)
+    bgeu x1, x0, PASS18             // bgeu-,       ->PASS18
+BRANCH_FAIL9:
+	nop
+	nop
+	nop
+	nop
+	halt		// Branch test has failed, time to debug
+	nop
+	nop
+	nop
+PASS19:
+    /* All Branch Tests have passed */
 	nop
 	nop
 	nop
@@ -581,7 +757,38 @@ PASS:
  	nop
  /*
  	jump instruction operations
+    - jalr
+    - jal
  */
+JTEST0:
+    jal x12, 4                      // x12 = JTEST0+4,          ->JTEST1
+    jal x0, JFAIL
+JTEST1:
+    jalr x12, 12(x12)               // x12 = JTEST1+4,          ->JTEST2
+    jal x0, JFAIL
+JTEST2:
+    jal x0, JTESTNEG0
+JTESTNEG3:
+    jal x0, JSUCCESS                //                          ->JSUCCESS
+    jal x0, JFAIL
+JTESTNEG2:
+    jalr x0, -16(x12)               //                          ->JTESTNEG3
+JTESTNEG1:
+    jalr x12, -20(x12)              // x12 = JTESTNEG1+4,       ->JTESTNEG2
+    jal x0, JFAIL
+JTESTNEG0:
+    jal x12, -8                     // x12 = JTESTNEG0+4,       ->JTESTNEG1
+    jal x0, JFAIL
+JFAIL:
+    nop
+    nop
+    nop
+    halt            // Jump test failed
+    nop
+    nop
+    nop
+JSUCCESS:
+    // All jump tests successful
 	nop
 	nop
 	nop
