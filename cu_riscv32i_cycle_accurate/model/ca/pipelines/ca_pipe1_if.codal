@@ -1,0 +1,68 @@
+/**
+ * Codasip s.r.o.
+ *
+ * CONFIDENTIAL
+ *
+ * Copyright 2022 Codasip s.r.o.
+ *
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained in this file, is and shall remain the property of
+ * Codasip s.r.o. and its suppliers, if any.
+ *
+ * The intellectual and technical concepts contained herein are confidential and proprietary to
+ * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
+ * technical concepts may be patent pending.
+ *
+ * This file is part of the Codasip Studio product. No part of the Studio product, including this
+ * file, may be use, copied, modified, or distributed except in accordance with the terms contained
+ * in Codasip license agreement under which you obtained this file.
+ *
+ *  \file   ca_pipe1_if.codal
+ *  \author Codasip
+ *  \date   09.02.2022
+ *  \brief  cycle accurate model
+ */
+
+#include "config.hcodal"
+#include "ca_defines.hcodal"
+
+event fe : pipeline(pipe.IF)
+{
+    use if_output;
+
+    semantics
+    {
+        uint2 if_status;
+        uint4 cache_hprot;
+
+        // -----------------------------------------------------------------------------------------
+        // Pipeline control
+        // -----------------------------------------------------------------------------------------
+
+        // If branch, the next PC is not the previous pc + 4, but the calculate branch or jump address
+        if (s_me_take_branch) s_if_nextpc = r_ex_target_address;
+        else s_if_nextpc = r_pc;
+
+        // Instruction request
+        cache_hprot = pma_hprot(s_if_nextpc[31 .. 2] :: (uint2)0, 0u);
+        if_fetch.transport(CP_PHS_ADDRESS, CP_AHB_NONSEQ, CP_AHB_READ, s_if_nextpc[31 .. 2] :: (uint2) 0, CP_AHB_SIZE_32, cache_hprot, CP_AHB_UNLOCK);
+
+        // Update the pipeline registers between the Instruction Fetch (IF) and Instruction Decode (ID) stages
+        if_output();
+    };
+};
+
+event if_output : pipeline(pipe.IF)
+{
+    semantics
+    {
+        if(!s_me_mem_busy) r_if_pc = s_if_nextpc;
+
+        if (s_me_take_branch) r_pc = s_if_nextpc + INSTR_SIZE;
+        else if (s_me_take_branch) r_pc = s_if_nextpc;
+        else if (!s_me_mem_busy)  r_pc = s_if_nextpc + INSTR_SIZE;
+
+        r_id_icache_stall = s_id_icache_stall;
+    };
+};

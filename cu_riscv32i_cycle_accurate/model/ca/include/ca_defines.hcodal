@@ -1,0 +1,117 @@
+/**
+ * Codasip s.r.o.
+ *
+ * CONFIDENTIAL
+ *
+ * Copyright 2022 Codasip s.r.o.
+ *
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained in this file, is and shall remain the property of
+ * Codasip s.r.o. and its suppliers, if any.
+ *
+ * The intellectual and technical concepts contained herein are confidential and proprietary to
+ * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
+ * technical concepts may be patent pending.
+ *
+ * This file is part of the Codasip Studio product. No part of the Studio product, including this
+ * file, may be use, copied, modified, or distributed except in accordance with the terms contained
+ * in Codasip license agreement under which you obtained this file.
+ *
+ *  \file   ca_defines.hcodal
+ *  \author Codasip
+ *  \date   09.02.2022
+ *  \brief  cycle accurate model
+ */
+
+
+#ifndef CA_DEFINES_HCODAL
+#define CA_DEFINES_HCODAL
+
+#include "config.hcodal"
+
+// -------------------------------------------------------------------------------------------------
+// Signal size
+// -------------------------------------------------------------------------------------------------
+
+#define ALUOP_W                 bitsizeof(enum aluop)
+#define ALU_SRC1_SEL_W          bitsizeof(enum alu_src1_sel)
+#define ALU_SRC2_SEL_W          bitsizeof(enum alu_src2_sel)
+
+#define IMM_GEN_SEL_W           bitsizeof(enum imm_gen_mux)
+
+#define MEM_OPCODE_W            bitsizeof(enum mem_ops)
+
+// -------------------------------------------------------------------------------------------------
+// Defines
+// -------------------------------------------------------------------------------------------------
+#define DONT_CARE           0
+#define NOP_INSTRUCTION     0x00000013          // NOP equates to OPC_ADDI, addi x0, x0, 0
+
+#define IMM_12BIT               true
+#define IMM_20BIT               false
+// -------------------------------------------------------------------------------------------------
+// IF stage
+// -------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
+// ID stage
+// -------------------------------------------------------------------------------------------------
+enum imm_gen_mux        // Select lines for generating the proper immediate to pass to the execute stage
+{
+    RTYPE_IMM_SEL,
+    ITYPE_IMM_SEL,
+    STYPE_IMM_SEL,
+    BTYPE_IMM_SEL,
+    UTYPE_IMM_SEL,
+    JTYPE_IMM_SEL
+};
+
+
+// -------------------------------------------------------------------------------------------------
+// EX stage
+// -------------------------------------------------------------------------------------------------
+
+// ALU function codes
+enum aluop
+{
+    ALU_NOP = 0,        // In enums, you can specify a particular value to an element.  All other
+    ALU_ADD,            // elements will have a value incremented by 1 unless assigned a specific value
+};
+
+// ALU SRC1 operand mux select lines
+enum alu_src1_sel
+{
+    ALU_SRC1_SEL_RF,    // Set output to the register file
+};
+
+// ALU SRC2 operand mux select lines
+enum alu_src2_sel
+{
+    ALU_SRC2_SEL_RF,    // Set output to the register file
+    ALU_SRC2_SEL_IMM,   // Set output to the immediate input value
+};
+
+// MEMORY opcodes
+enum mem_ops
+{
+    MEM_NOP             // Not a memory operation
+};
+
+
+// -------------------------------------------------------------------------------------------------
+// ME stage
+// -------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
+// WB stage
+// -------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
+// Auxiliary definitions
+// -------------------------------------------------------------------------------------------------
+
+
+
+#endif // CA_DEFINES_HCODAL
+

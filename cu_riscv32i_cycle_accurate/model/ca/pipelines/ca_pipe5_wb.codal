@@ -1,0 +1,58 @@
+/**
+ * Codasip s.r.o.
+ *
+ * CONFIDENTIAL
+ *
+ * Copyright 2022 Codasip s.r.o.
+ *
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained in this file, is and shall remain the property of
+ * Codasip s.r.o. and its suppliers, if any.
+ *
+ * The intellectual and technical concepts contained herein are confidential and proprietary to
+ * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
+ * technical concepts may be patent pending.
+ *
+ * This file is part of the Codasip Studio product. No part of the Studio product, including this
+ * file, may be use, copied, modified, or distributed except in accordance with the terms contained
+ * in Codasip license agreement under which you obtained this file.
+ *
+ *  \file   ca_pipe5_wb.codal
+ *  \author Codasip
+ *  \date   09.02.2022
+ *  \brief  cycle accurate model
+ */
+
+// -------------------------------------------------------------------------------------------------
+// Write-Back Stage
+// -------------------------------------------------------------------------------------------------
+
+event wb : pipeline(pipe.MEM)
+{
+    semantics
+    {
+        // Set local stall.
+        s_wb_stall = 0;
+
+        // if the register write (regwrite) control bit is true, update the register file with the mem
+        // alu result and if false, do nothing
+        //
+        // There are three ports to the register file, two read (source) inputs and one write port in this
+        // 5-stage CPU design
+        //
+        // In assignment 5, you will use all the three pipeline registers that were passed into the WB stage,
+        // regwrite, rd, and alu_result
+
+
+
+
+        // With the Write Back (WB) stage as the last stage in this RISCV32I 5-stage pipeline implementation,
+        // there is no wb_output event since there is no requirement for a pipeline register.  
+        // The write to the register file occurs at the same positive clock edge as a "pipeline
+        // register." You can look at the write to the register file as the output of the wb stage.
+
+
+    };
+};
+
