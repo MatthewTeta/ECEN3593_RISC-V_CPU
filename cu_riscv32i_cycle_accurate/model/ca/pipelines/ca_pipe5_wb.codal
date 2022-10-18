@@ -44,8 +44,7 @@ event wb : pipeline(pipe.MEM)
         // In assignment 5, you will use all the three pipeline registers that were passed into the WB stage,
         // regwrite, rd, and alu_result
 
-
-
+        if (r_mem_regwrite) rf_xpr.wrt0[r_mem_rd] = r_mem_alu_result;
 
         // With the Write Back (WB) stage as the last stage in this RISCV32I 5-stage pipeline implementation,
         // there is no wb_output event since there is no requirement for a pipeline register.  

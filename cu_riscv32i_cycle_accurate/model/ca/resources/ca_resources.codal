@@ -140,14 +140,14 @@ register bit[ADDR_W]            r_ex_target_address     { pipeline = pipe.EX; };
 // -------------------------------------------------------------------------------------------------
 // Memory stage
 // -------------------------------------------------------------------------------------------------
-signal bit[BOOLEAN_BIT]         s_me_take_branch;                                   //Informs the pipeline in a branch or jump is occuring
+signal bit[BOOLEAN_BIT]         s_me_take_branch;                                   // Informs the pipeline in a branch or jump is occuring
 signal bit[BOOLEAN_BIT]         s_me_mem_busy;                                      // Memory bus is busy
 
 
 // MEM pipeline register
-register bit[WORD_W]            r_mem_alu_result        { pipeline = pipe.MEM };    // ALU result from Memory stage
-register bit[RF_CPR_W]          r_mem_rd                { pipeline = pipe.MEM };    // Destination, rd, register index
-register bit[BOOLEAN_BIT]       r_mem_regwrite          { pipeline = pipe.MEM };    // Register Write (regwrite)
+register bit[WORD_W]            r_mem_alu_result        { pipeline = pipe.MEM; };   // ALU result from Memory stage
+register bit[RF_XPR_W]          r_mem_rd                { pipeline = pipe.MEM; };   // Destination, rd, register index
+register bit[BOOLEAN_BIT]       r_mem_regwrite          { pipeline = pipe.MEM; };   // Register Write (regwrite)
 
 
 // -------------------------------------------------------------------------------------------------

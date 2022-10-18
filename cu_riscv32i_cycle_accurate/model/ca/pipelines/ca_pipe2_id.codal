@@ -7,16 +7,17 @@
  *
  * All Rights Reserved.
  *
- * NOTICE: All information contained in this file, is and shall remain the property of
- * Codasip s.r.o. and its suppliers, if any.
+ * NOTICE: All information contained in this file, is and shall remain the
+ * property of Codasip s.r.o. and its suppliers, if any.
  *
- * The intellectual and technical concepts contained herein are confidential and proprietary to
- * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
- * technical concepts may be patent pending.
+ * The intellectual and technical concepts contained herein are confidential and
+ * proprietary to Codasip s.r.o. and are protected by trade secret and copyright
+ * law.  In addition, elements of the technical concepts may be patent pending.
  *
- * This file is part of the Codasip Studio product. No part of the Studio product, including this
- * file, may be use, copied, modified, or distributed except in accordance with the terms contained
- * in Codasip license agreement under which you obtained this file.
+ * This file is part of the Codasip Studio product. No part of the Studio
+ * product, including this file, may be use, copied, modified, or distributed
+ * except in accordance with the terms contained in Codasip license agreement
+ * under which you obtained this file.
  *
  *  \file   ca_pipe2_ex.codal
  *  \author Codasip
@@ -24,252 +25,283 @@
  *  \brief  cycle accurate model
  */
 
-#include "config.hcodal"
 #include "ca_defines.hcodal"
+#include "config.hcodal"
+
 
 // -------------------------------------------------------------------------------------------------
 // Decode stage
 // -------------------------------------------------------------------------------------------------
 
-event id : pipeline(pipe.ID)
-{
-    use inst_decode;
-    use id_output;
+event id : pipeline(pipe.ID) {
+  use inst_decode;
+  use id_output;
 
-    semantics
-    {
-        uint32 id_instr_temp;
-        uint32 temp_instr;
-        bool cache_ready, cache_response;
-        uint2 instr_control;
-        
-        // Set local stall.
-        s_id_stall = 0;
+  semantics {
+    uint32 id_instr_temp;
+    uint32 temp_instr;
+    bool cache_ready, cache_response;
+    uint2 instr_control;
 
-        if_fetch.transport(CP_PHS_DATA, cache_ready, cache_response, id_instr_temp); // Read the instruction from memory request in if-stage
+    // Set local stall.
+    s_id_stall = 0;
 
-        if (!cache_ready) s_id_icache_stall = true;                     // If i-cache not ready, stall instructions until i-cache is ready
-        else s_id_icache_stall = false;
+    if_fetch.transport(
+        CP_PHS_DATA, cache_ready, cache_response,
+        id_instr_temp); // Read the instruction from memory request in if-stage
 
-        instr_control = (uint1)(r_id_buffer_full) :: (uint1)(s_id_icache_stall || !id_instr_temp[0..0]);
+    if (!cache_ready)
+      s_id_icache_stall = true; // If i-cache not ready, stall instructions
+                                // until i-cache is ready
+    else
+      s_id_icache_stall = false;
 
-        switch (instr_control) {
-            case (uint2) 10:                // instruction buffer full, recovering from ID stage stall
-            case (uint2) 11:                // buffer has priority over instruction from memory or cache
-                s_id_instr = r_id_instr_preserved;
-                break;
-            case (uint2) 01:                // cache is stalled or instruction input is 0
-                s_id_instr = NOP_INSTRUCTION;
-                break;
-            case (uint2) 00:                // instruction from memory or i-cache
-                s_id_instr = id_instr_temp;
-                break;
-        }
+    instr_control = (uint1)(r_id_buffer_full)::(uint1)(s_id_icache_stall ||
+                                                       !id_instr_temp[0..0]);
 
-        // After obtaining the instruction word, all the values of the instruction word will be parsed into their individual
-        // signals.
+    switch (instr_control) {
+    case (uint2)10: // instruction buffer full, recovering from ID stage stall
+    case (uint2)11: // buffer has priority over instruction from memory or cache
+      s_id_instr = r_id_instr_preserved;
+      break;
+    case (uint2)01: // cache is stalled or instruction input is 0
+      s_id_instr = NOP_INSTRUCTION;
+      break;
+    case (uint2)00: // instruction from memory or i-cache
+      s_id_instr = id_instr_temp;
+      break;
+    }
 
-        // Build up the opcode
-        // Use the concatanation operator :: to create the desired fields from the instruction field if required
-        // The full instruction opcode in func7 :: func3 :: opcode
-        s_id_opcode = s_id_instr[31..25] :: s_id_instr[14..12] :: s_id_instr[6..0];
+    // After obtaining the instruction word, all the values of the instruction
+    // word will be parsed into their individual signals.
 
-        // address for src1
-        // Use the concatanation operator :: to create the desired fields from the instruction field if required
-        s_id_src1 = s_id_instr[26..22];
+    // Build up the opcode
+    // Use the concatanation operator :: to create the desired fields from the
+    // instruction field if required The full instruction opcode in func7 ::
+    // func3 :: opcode
+    s_id_opcode = s_id_instr[31..25] ::s_id_instr[14..12] ::s_id_instr[6..0];
 
-        // address for src2
-        // Use the concatanation operator :: to create the desired fields from the instruction field if required
-        s_id_src2 = s_id_instr[21..17];
+    // address for src1
+    // Use the concatanation operator :: to create the desired fields from the
+    // instruction field if required
+    s_id_src1 = s_id_instr[19..15];
 
-        // destination address
-        // Use the concatanation operator :: to create the desired fields from the instruction field if required
-        s_id_rd = s_id_instr[31..27];
+    // address for src2
+    // Use the concatanation operator :: to create the desired fields from the
+    // instruction field if required
+    s_id_src2 = s_id_instr[24..20];
 
-        // immediate decode
-        // At this stage, the instruction has not been decoded to determine if an immediate value will be required
-        // TO optimize performance, the immediate value will always be calculated and passed to the execution stage
-        // via the ID pipeline register
-        // Use the concatanation operator :: to create the desired fields from the instruction field if required
-        s_id_imm_rtype = (int32) DONT_CARE;
-        s_id_imm_itype = (int32)(int12) (s_id_instr[31..20]);
-        s_id_imm_stype = (int32)(int12) (s_id_instr[31..25] :: s_id_instr[11..7]);
-        s_id_imm_btype = (int32)(int13) (s_id_instr[31..31] :: s_id_instr[7..7]     :: s_id_instr[30..25]   :: s_id_instr[11..8]    :: (uint1)0);
-        s_id_imm_utype = (int32)        (s_id_instr[31..12] :: (uint12)0);
-        s_id_imm_jtype = (int32)(int21) (s_id_instr[31]     :: s_id_instr[19..12]   :: s_id_instr[20]       :: s_id_instr[30..25]   :: s_id_instr[24..21]   :: (uint1)0);
+    // destination address
+    // Use the concatanation operator :: to create the desired fields from the
+    // instruction field if required
+    s_id_rd = s_id_instr[11..7];
 
-        // Register file read for src1 and src2 operands.  Similar to the immediate decode, both src1 and src2
-        // values will be read in parallel from the register file as the instruction is decoded to optimize performance
-        // The register file has been defined as 1 write port, wrt0, and two read ports, src1 and src2.  To specify the
-        // the port, you indicate it by affixing at the end of the register file name with a "." and the "port name"
-        // Here is the architectural definition of the register file found in "project"/model/share/resources/arch.codal
-        //
-        //          arch register_file bit[WORD_W] rf_xpr
-        //          {
-        //              dataport src1, src2 {flag = R;};
-        //              dataport wrt0 {flag = W;};
-        //              size = RF_XPR_SIZE;
-        //              reset = true;
-        //              default = 0;
-        //           };
-        //
-        // To specify the desired register, you use the register number as an index into an array as you would in
-        // c-programming.  Example is register_file.port[register_number]
+    // immediate decode
+    // At this stage, the instruction has not been decoded to determine if an
+    // immediate value will be required TO optimize performance, the immediate
+    // value will always be calculated and passed to the execution stage via the
+    // ID pipeline register Use the concatanation operator :: to create the
+    // desired fields from the instruction field if required
+    s_id_imm_rtype = (int32)DONT_CARE;
+    s_id_imm_itype = (int32)(int12)(s_id_instr[31..20]);
+    s_id_imm_stype = (int32)(int12)(s_id_instr[31..25] ::s_id_instr[11..7]);
+    s_id_imm_btype =
+        (int32)(int13)(s_id_instr[31..31] ::s_id_instr[7..7] ::s_id_instr
+                           [30..25] ::s_id_instr[11..8] ::(uint1)0);
+    s_id_imm_utype = (int32)(s_id_instr[31..12] ::(uint12)0);
+    s_id_imm_jtype =
+        (int32)(int21)(s_id_instr[31..31] ::s_id_instr[19..12] ::s_id_instr
+                           [20..20] ::s_id_instr[30..25] ::s_id_instr[24..21] ::
+                               (uint1)0);
 
-        s_id_rf_src1 = rf_xpr.src1[s_id_src1];
-        s_id_rf_src2 = rf_xpr.src2[s_id_src2];
+    // Register file read for src1 and src2 operands.  Similar to the immediate
+    // decode, both src1 and src2 values will be read in parallel from the
+    // register file as the instruction is decoded to optimize performance The
+    // register file has been defined as 1 write port, wrt0, and two read ports,
+    // src1 and src2.  To specify the the port, you indicate it by affixing at
+    // the end of the register file name with a "." and the "port name" Here is
+    // the architectural definition of the register file found in
+    // "project"/model/share/resources/arch.codal
+    //
+    //          arch register_file bit[WORD_W] rf_xpr
+    //          {
+    //              dataport src1, src2 {flag = R;};
+    //              dataport wrt0 {flag = W;};
+    //              size = RF_XPR_SIZE;
+    //              reset = true;
+    //              default = 0;
+    //           };
+    //
+    // To specify the desired register, you use the register number as an index
+    // into an array as you would in c-programming.  Example is
+    // register_file.port[register_number]
 
-        // Preserve the current instruction decoded
-        if (cache_ready & !r_id_buffer_full) {
-            r_id_instr_preserved = s_id_instr;
-            r_id_pc_preserved = r_if_pc;
-        }
+    s_id_rf_src1 = rf_xpr.src1[s_id_src1];
+    s_id_rf_src2 = rf_xpr.src2[s_id_src2];
 
-        // Decoder activation
-        inst_decode(s_id_opcode);
+    // Preserve the current instruction decoded
+    if (cache_ready & !r_id_buffer_full) {
+      r_id_instr_preserved = s_id_instr;
+      r_id_pc_preserved = r_if_pc;
+    }
 
-        // Update the pipeline registers between the Instruction Decode (ID) and Execute (EX) stages
-        id_output();
-    };
+    // Decoder activation
+    inst_decode(s_id_opcode);
+
+    // Update the pipeline registers between the Instruction Decode (ID) and
+    // Execute (EX) stages
+    id_output();
+  };
 };
 
-event id_output : pipeline(pipe.ID)
-{
+event id_output : pipeline(pipe.ID) {
 
-    semantics
-    {
-        // -----------------------------------------------------------------------------------------
-        // Pipeline output
-        // -----------------------------------------------------------------------------------------
-        // r_id_pc
-        // r_id_rd
-        // r_id_rf_src1
-        // r_id_rf_src2
-        // r_id_regwrite
-        // r_id_src2_imm
-        //
-        // r_id_aluop
-        // r_id_src1_sl
-        // r_id_src2_sl
-        // r_id_branch_inst
-        // r_id_jump_inst
-        // r_id_mem_ops
-        // r_id_memread
+  semantics {
+    // -----------------------------------------------------------------------------------------
+    // Pipeline output
+    // -----------------------------------------------------------------------------------------
+    // r_id_pc
+    // r_id_rd
+    // r_id_rf_src1
+    // r_id_rf_src2
+    // r_id_regwrite
+    // r_id_src2_imm
+    //
+    // r_id_aluop
+    // r_id_src1_sl
+    // r_id_src2_sl
+    // r_id_branch_inst
+    // r_id_jump_inst
+    // r_id_mem_ops
+    // r_id_memread
 
-        // Assuming at this stage the worst case timing of any of the stages for a 5-stage pipeline will
-        // be the Execute (EX) stage, we will move the mux to select which type of interrupt to use if
-        // required for the ALU operation into the Instruction Decode (ID) stage.  By removing this addional
-        // logic that must occur in series, before the ALU operation, the total path through the EX stage
-        // is reduced, minimizing the time required for the EX stage to complete.
-        //
-        // Since all clock stages must run at the same clock frequency, minimizing the time in the slowest
-        // pipeline stage will increase the frequency of this stage (frequency = 1 / period) and thus increases
-        // the clock frequency of the entire solution.
-        //
-        // Use the control line s_id_imm_gen_sel that is generated from the Decoder to set the Immediate value
-        // to pass to the EX stage through the ID pipeline register
-        //
-        // Example:
-        //      switch (s_id_imm_gen_sel) {
-        //          case RTYPE_IMM_SEL:
-        //              r_id_src2_imm = s_id_imm_rtype;
-        //              break;
-        //          ...
-        //          ...
-        //          default:
-        //              r_id_src2_imm = 0;
-        //              break;
-        //      }
-        //
-        // Complete the switch statement below using the pipeline register resource that you added in the 
-        // previous step of this assignment.
+    // Assuming at this stage the worst case timing of any of the stages for a
+    // 5-stage pipeline will be the Execute (EX) stage, we will move the mux to
+    // select which type of interrupt to use if required for the ALU operation
+    // into the Instruction Decode (ID) stage.  By removing this addional logic
+    // that must occur in series, before the ALU operation, the total path
+    // through the EX stage is reduced, minimizing the time required for the EX
+    // stage to complete.
+    //
+    // Since all clock stages must run at the same clock frequency, minimizing
+    // the time in the slowest pipeline stage will increase the frequency of
+    // this stage (frequency = 1 / period) and thus increases the clock
+    // frequency of the entire solution.
+    //
+    // Use the control line s_id_imm_gen_sel that is generated from the Decoder
+    // to set the Immediate value to pass to the EX stage through the ID
+    // pipeline register
+    //
+    // Example:
+    //      switch (s_id_imm_gen_sel) {
+    //          case RTYPE_IMM_SEL:
+    //              r_id_src2_imm = s_id_imm_rtype;
+    //              break;
+    //          ...
+    //          ...
+    //          default:
+    //              r_id_src2_imm = 0;
+    //              break;
+    //      }
+    //
+    // Complete the switch statement below using the pipeline register resource
+    // that you added in the previous step of this assignment.
 
-        switch (s_id_imm_gen_sel) {
-            case RTYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_rtype;
-                break;
-            case ITYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_itype;
-                break;
-            case STYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_stype;
-                break;
-            case BTYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_btype;
-                break;
-            case UTYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_utype;
-                break;
-            case JTYPE_IMM_SEL:
-                r_id_src2_imm = s_id_imm_jtype;
-                break;
-            default:
-                break;
-        }
+    switch (s_id_imm_gen_sel) {
+    case RTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_rtype;
+      break;
+    case ITYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_itype;
+      break;
+    case STYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_stype;
+      break;
+    case BTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_btype;
+      break;
+    case UTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_utype;
+      break;
+    case JTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_jtype;
+      break;
+    default:
+      break;
+    }
 
-        // Passing data-path and control-signals to the next stage, EX, through the ID pipeline register
+    // Passing data-path and control-signals to the next stage, EX, through the
+    // ID pipeline register
 
-        // Use the Program Counter ID pipeline register thate you declared in ca_resources.codal
-        // What register from the IF pipeline register will you use to pass the PC to the EX stage
-        // You just added this pipeline register resource in the previous step of this assignment
-        // Add this assignment here:
+    // Use the Program Counter ID pipeline register thate you declared in
+    // ca_resources.codal What register from the IF pipeline register will you
+    // use to pass the PC to the EX stage You just added this pipeline register
+    // resource in the previous step of this assignment Add this assignment
+    // here:
 
-        r_id_pc = r_if_pc;
+    r_id_pc = r_if_pc;
 
-        // Use the register file ouptput for src1 ID pipeline register you declared in ca_resources.codal
-        // What signal from the id (Instruction Decode) event will you use to pass the rs1 register value to 
-        // the EX stage?  
-        // You just added this pipeline register resource in the previous step of this assignment
-        // Add this assignment here:
+    // Use the register file ouptput for src1 ID pipeline register you declared
+    // in ca_resources.codal What signal from the id (Instruction Decode) event
+    // will you use to pass the rs1 register value to the EX stage? You just
+    // added this pipeline register resource in the previous step of this
+    // assignment Add this assignment here:
 
-        r_id_rf_src1 = s_id_rf_src1;
+    r_id_rf_src1 = s_id_rf_src1;
 
-        // Use the register file ouptput for src2 ID pipeline register you declared in ca_resources.codal
-        // What signal from the id (Instruction Decode) event will you use to pass the rs2 register value to 
-        // the EX stage?  
-        // You just added this pipeline register resource in the previous step of this assignment
-        // Add this assignment here:
+    // Use the register file ouptput for src2 ID pipeline register you declared
+    // in ca_resources.codal What signal from the id (Instruction Decode) event
+    // will you use to pass the rs2 register value to the EX stage? You just
+    // added this pipeline register resource in the previous step of this
+    // assignment Add this assignment here:
 
-        r_id_rf_src2 = s_id_rf_src2;
+    r_id_rf_src2 = s_id_rf_src2;
 
-        // Use the rd (destination) register ID pipeline register that you declared in ca_resources.codal
-        // What signal from the instruction parsing will you set the following ID pipeline register?
-        // You just added this pipeline register resource in the previous step of this assignment
-        // Add this assignment here:
+    // Use the rd (destination) register ID pipeline register that you declared
+    // in ca_resources.codal What signal from the instruction parsing will you
+    // set the following ID pipeline register? You just added this pipeline
+    // register resource in the previous step of this assignment Add this
+    // assignment here:
 
-        r_id_rd = s_id_rd;
+    r_id_rd = s_id_rd;
 
-        // In the RISCV architecture, register 0 is a special register that will always read 0 which
-        // implies that it is a read-only register of value 0.  If the destination register is 0,
-        // we can disable the writes to register 0
-        //
-        // Use an if statement to disable the regwrite control-signal, make false, if the destination
-        // register, rd, is 0 and if not 0, assign the s_id_regwrite signal from the decoder, 
-        // s_id_regwrite
-        //
-        // What signal will you use in the if statement from the instruction parsing?
-        // You just added this pipeline register resource in the previous step of this assignment
-        // Write this if, else statement here for r_id_regwrite
+    // In the RISCV architecture, register 0 is a special register that will
+    // always read 0 which implies that it is a read-only register of value 0.
+    // If the destination register is 0, we can disable the writes to register 0
+    //
+    // Use an if statement to disable the regwrite control-signal, make false,
+    // if the destination register, rd, is 0 and if not 0, assign the
+    // s_id_regwrite signal from the decoder, s_id_regwrite
+    //
+    // What signal will you use in the if statement from the instruction
+    // parsing? You just added this pipeline register resource in the previous
+    // step of this assignment Write this if, else statement here for
+    // r_id_regwrite
 
-        if (s_id_rd == (uint5)0)    r_id_regwrite = false;
-        else                        r_id_regwrite = s_id_regwrite;
+    if (s_id_rd == (uint5)0)
+      r_id_regwrite = false;
+    else
+      r_id_regwrite = s_id_regwrite;
 
-        // What signal from the decoder will you set the following ID pipeline register?
-        r_id_aluop = s_id_aluop;
+    // What signal from the decoder will you set the following ID pipeline
+    // register?
+    r_id_aluop = s_id_aluop;
 
-        // What signal from the decoder will you set the following ID pipeline register which will select the src1 ALU input mux?
-        r_id_src1_sl = s_id_alusrc1;
+    // What signal from the decoder will you set the following ID pipeline
+    // register which will select the src1 ALU input mux?
+    r_id_src1_sl = s_id_alusrc1;
 
-        // What signal from the decoder will you set the following ID pipeline register which will select the src2 ALU input mux?
-        r_id_src2_sl = s_id_alusrc2;
+    // What signal from the decoder will you set the following ID pipeline
+    // register which will select the src2 ALU input mux?
+    r_id_src2_sl = s_id_alusrc2;
 
-        // Passing Decoder control-signals to the EX stage
-        r_id_branch_inst = s_id_branch_inst;
-        r_id_jump_inst = s_id_jump_inst;
-        r_id_mem_ops = s_id_mem_ops;
-        r_id_memread = s_id_memread;
+    // Passing Decoder control-signals to the EX stage
+    r_id_branch_inst = s_id_branch_inst;
+    r_id_jump_inst = s_id_jump_inst;
+    r_id_mem_ops = s_id_mem_ops;
+    r_id_memread = s_id_memread;
 
-        // Passing the halt signal to the EX stage
-        r_id_halt         = s_id_halt;
-    };
+    // Passing the halt signal to the EX stage
+    r_id_halt = s_id_halt;
+  };
 };

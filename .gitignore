@@ -3,3 +3,4 @@
 **/__pycache__
 **/tmp
 sim_exit_code
+cu_riscv32i_cycle_accurate/work

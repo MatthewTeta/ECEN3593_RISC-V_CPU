@@ -122,6 +122,33 @@ event alu_operate : pipeline(pipe.EX)
             case ALU_ADD:
                 s_ex_alu_result = s_ex_src1_operand + s_ex_src2_operand;
                 break;
+            case ALU_SLT:
+                s_ex_alu_result = s_ex_src1_operand < s_ex_src2_operand;
+                break;
+            case ALU_SLTU:
+                s_ex_alu_result = (uint32)s_ex_src1_operand < (uint32)s_ex_src2_operand;
+                break;
+            case ALU_XOR:
+                s_ex_alu_result = s_ex_src1_operand ^ s_ex_src2_operand;
+                break;
+            case ALU_OR:
+                s_ex_alu_result = s_ex_src1_operand | s_ex_src2_operand;
+                break;
+            case ALU_AND:
+                s_ex_alu_result = s_ex_src1_operand & s_ex_src2_operand;
+                break;
+            case ALU_SUB:
+                s_ex_alu_result = s_ex_src1_operand - s_ex_src2_operand;
+                break;
+            case ALU_SLL:
+                s_ex_alu_result = s_ex_src1_operand << s_ex_src2_operand;
+                break;
+            case ALU_SRL:
+                s_ex_alu_result = (uint32)s_ex_src1_operand >> s_ex_src2_operand;
+                break;
+            case ALU_SRA:
+                s_ex_alu_result = s_ex_src1_operand >> s_ex_src2_operand;
+                break;
             default:
                 break;
         }
