@@ -40,6 +40,9 @@
 
 #define IMM_GEN_SEL_W           bitsizeof(enum imm_gen_mux)
 
+#define RFF_W                   bitsizeof(enum rff_fwd)
+#define DHF_W                   bitsizeof(enum dhf_fwd)
+
 #define MEM_OPCODE_W            bitsizeof(enum mem_ops)
 
 // -------------------------------------------------------------------------------------------------
@@ -67,6 +70,11 @@ enum imm_gen_mux        // Select lines for generating the proper immediate to p
     JTYPE_IMM_SEL
 };
 
+enum rff_fwd
+{
+    RFF_REG,
+    RFF_WB,
+};
 
 // -------------------------------------------------------------------------------------------------
 // EX stage
@@ -86,6 +94,13 @@ enum aluop
     ALU_SLL,
     ALU_SRL,
     ALU_SRA,
+};
+
+enum dhf_fwd
+{
+    DHF_REG,
+    DHF_ME,
+    DHF_WB,
 };
 
 // ALU SRC1 operand mux select lines

@@ -249,10 +249,10 @@ element i_hw_rtype_shift
 
        // Operand MUXes
        s_id_alusrc1 = ALU_SRC1_SEL_RF;
-       s_id_alusrc2 = ALU_SRC2_SEL_RF;
+       s_id_alusrc2 = ALU_SRC2_SEL_IMM;
 
        // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = RTYPE_IMM_SEL;
+       s_id_imm_gen_sel = ITYPE_IMM_SEL;
 
        // Is this a branch instruction to take a branch if branch taken
        s_id_branch_inst = false;

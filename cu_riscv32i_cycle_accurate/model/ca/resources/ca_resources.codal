@@ -94,6 +94,11 @@ signal bit[BOOLEAN_BIT]     s_id_memread;               // Memory load operation
 signal bit[BOOLEAN_BIT]     s_id_branch_inst;           // bit used to notify an instruction is a branch
 signal bit[BOOLEAN_BIT]     s_id_jump_inst;             // bit used to notify a jump instruction
 
+// Instruction forwarding
+signal bit[RFF_W]           s_id_rff1_sel;
+signal bit[RFF_W]           s_id_rff2_sel;
+signal bit[RFF_W]           s_id_rff1_val;
+signal bit[RFF_W]           s_id_rff2_val;
 
 // ID pipeline register
 register bit[ADDR_W]            r_id_pc                 { pipeline = pipe.ID; };    // Program Counter
@@ -123,6 +128,10 @@ register bit[BOOLEAN_BIT]  r_id_halt                    { pipeline = pipe.ID; };
 // ALU signals
 signal bit[WORD_W]              s_ex_src1_operand;                                  // src1 operand into ALU
 signal bit[WORD_W]              s_ex_src2_operand;                                  // src2 operand into ALU
+signal bit[DHF_W]               s_ex_dhf1_sel;                                      // Forwarding location mux sel
+signal bit[DHF_W]               s_ex_dhf2_sel;                                      // Forwarding location mux sel
+signal bit[WORD_W]              s_ex_src1_val;                                      // forwarding result 1
+signal bit[WORD_W]              s_ex_src2_val;                                      // forwarding result 2
 signal bit[WORD_W]              s_ex_alu_result;                                    // result of ALU operation
 
 
