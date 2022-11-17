@@ -32,11 +32,46 @@
 // -------------------------------------------------------------------------------------------------
 event me : pipeline(pipe.MEM)
 {
-    use me_output;
+    use branch_logic;
 
     semantics
     {
 
+        branch_logic();
+    };
+};
+
+event branch_logic : pipeline(pipe.MEM)
+{
+    use me_output;
+
+    semantics
+    {
+        switch (r_ex_branchop)
+        {
+            case BRANCH_FALSE:
+                s_me_take_branch = false;
+                break;
+            case BRANCH_TRUE:
+                s_me_take_branch = true;
+                break;
+            case BRANCH_COND_FALSE:
+                if (r_ex_zero) {
+                    s_me_take_branch = false;
+                } else {
+                    s_me_take_branch = true;
+                }
+                break;
+            case BRANCH_COND_TRUE:
+                if (r_ex_zero) {
+                    s_me_take_branch = true;
+                } else {
+                    s_me_take_branch = false;
+                }
+                break;
+            default:
+                break;
+        };
         // Update the pipeline registers between the Memory (MEM) and Write Back (WB) stages
         me_output();
     };

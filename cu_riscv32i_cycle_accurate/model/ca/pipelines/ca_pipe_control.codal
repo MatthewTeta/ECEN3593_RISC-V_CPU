@@ -31,7 +31,11 @@ event pipeline_control : pipeline(pipe.MEM)
 {
     semantics
     {
-
+        // Clear instructions ahead in the pipeline in case there is a branch or jump
+        if (s_me_take_branch) {
+            pipe.ID.clear();
+            pipe.EX.clear();
+        }
     };
 };
 

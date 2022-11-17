@@ -209,7 +209,7 @@ event id_output : pipeline(pipe.ID) {
     // r_id_aluop
     // r_id_src1_sl
     // r_id_src2_sl
-    // r_id_branch_inst
+    // r_id_branchop
     // r_id_jump_inst
     // r_id_mem_ops
     // r_id_memread
@@ -335,7 +335,8 @@ event id_output : pipeline(pipe.ID) {
     r_id_src2_sl = s_id_alusrc2;
 
     // Passing Decoder control-signals to the EX stage
-    r_id_branch_inst = s_id_branch_inst;
+    r_id_rfwt = s_id_rfwt;
+    r_id_branchop = s_id_branchop;
     r_id_jump_inst = s_id_jump_inst;
     r_id_mem_ops = s_id_mem_ops;
     r_id_memread = s_id_memread;

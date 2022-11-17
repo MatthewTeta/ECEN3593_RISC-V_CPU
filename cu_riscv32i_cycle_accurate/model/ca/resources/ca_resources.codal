@@ -91,8 +91,10 @@ signal bit[ALU_SRC1_SEL_W]  s_id_alusrc1;               // src1 operand mux sele
 signal bit[ALU_SRC2_SEL_W]  s_id_alusrc2;               // src2 operand mux select line
 signal bit[MEM_OPCODE_W]    s_id_mem_ops;               // Memory opcode
 signal bit[BOOLEAN_BIT]     s_id_memread;               // Memory load operation if true
-signal bit[BOOLEAN_BIT]     s_id_branch_inst;           // bit used to notify an instruction is a branch
+signal bit[MEM_BRANCHOP_W]  s_id_branchop;              // bit used to notify an instruction is a branch
 signal bit[BOOLEAN_BIT]     s_id_jump_inst;             // bit used to notify a jump instruction
+
+signal bit[RFWT_OPS_W]      s_id_rfwt;                  // Used to select ALU out or PC+4 for RF write src
 
 // Instruction forwarding
 signal bit[RFF_W]           s_id_rff1_sel;
@@ -111,12 +113,11 @@ register bit[WORD_W]            r_id_src2_imm           { pipeline = pipe.ID; };
 register bit[ALUOP_W]           r_id_aluop              { pipeline = pipe.ID; };    // ALU opcode
 register bit[ALU_SRC1_SEL_W]    r_id_src1_sl            { pipeline = pipe.ID; };    // ALU src1 select lines for mux
 register bit[ALU_SRC2_SEL_W]    r_id_src2_sl            { pipeline = pipe.ID; };    // ALU src2 select lines for mux
-register bit[BOOLEAN_BIT]       r_id_branch_inst        { pipeline = pipe.ID; };    // If true, conditional branch instruction
+register bit[MEM_BRANCHOP_W]    r_id_branchop           { pipeline = pipe.ID; };    // If true, conditional branch instruction
 register bit[BOOLEAN_BIT]       r_id_jump_inst          { pipeline = pipe.ID; };    // If true, jump instruction
+register bit[RFWT_OPS_W]        r_id_rfwt               { pipeline = pipe.ID; };    // Used to select ALU out or PC+4 for RF write src
 register bit[MEM_OPCODE_W]      r_id_mem_ops            { pipeline = pipe.ID; };    // Opcode for Loads and Store operations (NOP = no load or store)
 register bit[BOOLEAN_BIT]       r_id_memread            { pipeline = pipe.ID; };    // If true, it is a Load operation
-
-
 
 register bit[BOOLEAN_BIT]  r_id_halt                    { pipeline = pipe.ID; };    // Halt control bit
 
@@ -133,17 +134,21 @@ signal bit[DHF_W]               s_ex_dhf2_sel;                                  
 signal bit[WORD_W]              s_ex_src1_val;                                      // forwarding result 1
 signal bit[WORD_W]              s_ex_src2_val;                                      // forwarding result 2
 signal bit[WORD_W]              s_ex_alu_result;                                    // result of ALU operation
+signal bit[WORD_W]              s_ex_ex_output;                                     // actual value output from ex stage after selecting between alu_result and PC+4
+signal bit[ADDR_W]              s_ex_target_address;                                // result of ALU comparison (XOR) set if zero value
+signal bit[BOOLEAN_BIT]         s_ex_zero;                                          // result of ALU comparison (XOR) set if zero value
 
 
 // EX pipeline register
 register bit[WORD_W]            r_ex_alu_result         { pipeline = pipe.EX; };    // Data result from ALU
 register bit[RF_XPR_W]          r_ex_rd                 { pipeline = pipe.EX; };    // rd / write register
 register bit[BOOLEAN_BIT]       r_ex_regwrite           { pipeline = pipe.EX; };    // Does the current instruction wrt to RF
-register bit[BOOLEAN_BIT]       r_ex_branch_inst        { pipeline = pipe.EX; };    // If true, conditional branch instruction
+register bit[MEM_BRANCHOP_W]    r_ex_branchop           { pipeline = pipe.EX; };    // If true, conditional branch instruction
 register bit[BOOLEAN_BIT]       r_ex_jump_inst          { pipeline = pipe.EX; };    // If true, jump instruction
 register bit[MEM_OPCODE_W]      r_ex_mem_ops            { pipeline = pipe.EX; };    // Opcode for Loads and Store operations (NOP = no load or store)
 register bit[BOOLEAN_BIT]       r_ex_memread            { pipeline = pipe.EX; };    // If true, it is a Load operation
 register bit[ADDR_W]            r_ex_target_address     { pipeline = pipe.EX; };    // Address to branch or jump to if required
+register bit[ADDR_W]            r_ex_zero               { pipeline = pipe.EX; };    // ALU comparison
 
 
 // -------------------------------------------------------------------------------------------------

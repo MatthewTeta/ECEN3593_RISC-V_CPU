@@ -204,6 +204,32 @@ event alu_operate : pipeline(pipe.EX)
                 break;
         }
 
+        // Select target address from PC+IMM or ALU based on if this is a jump instruction
+        if (r_id_jump_inst) {
+            s_ex_target_address = s_ex_alu_result;
+        } else {
+            s_ex_target_address = r_id_pc + r_id_src2_imm;
+        }
+
+        // Compare the ALU output to zero (set if zero) for branches
+        if (s_ex_alu_result == (uint32)0) {
+            s_ex_zero = true;
+        } else {
+            s_ex_zero = false;
+        }
+
+        // Select the register file output either from the PC+4 or the alu_result
+        switch (r_id_rfwt) {
+            case WB_ALU:
+                s_ex_ex_output = s_ex_alu_result;
+                break;
+            case WB_PC:
+                s_ex_ex_output = r_id_pc + 4;
+                break;
+            default:
+                break;
+        }
+
     };
 };
 
@@ -215,7 +241,7 @@ event ex_output : pipeline(pipe.EX)
         // r_ex_alu_result
         // r_ex_rd
         // r_ex_regwrite
-        // r_ex_branch_inst
+        // r_ex_branchop
         // r_ex_jump_inst
         // r_ex_mem_ops
         // r_ex_memread
@@ -225,7 +251,9 @@ event ex_output : pipeline(pipe.EX)
         // Use the pipeline register that you created earlier in Assignment 5 to pass the output
         // signal from the ALU switch statement from the alu_operate event
 
-        r_ex_alu_result = s_ex_alu_result;
+        r_ex_alu_result     =   s_ex_ex_output;
+        r_ex_target_address =   s_ex_target_address;
+        r_ex_zero           =   s_ex_zero;
 
         // Passing control signals to the next stage, MEM, through the EX pipeline register.  These
         // instruction decoder signals are being passed from the ID pipeline to the EX pipeline.
@@ -235,7 +263,7 @@ event ex_output : pipeline(pipe.EX)
         r_ex_regwrite       =   r_id_regwrite;
 
         // Passing Decoder control-signals to the EX stage
-        r_ex_branch_inst    =   r_id_branch_inst;
+        r_ex_branchop       =   r_id_branchop;
         r_ex_jump_inst      =   r_id_jump_inst;
         r_ex_mem_ops        =   r_id_mem_ops;
         r_ex_memread        =   r_id_memread;

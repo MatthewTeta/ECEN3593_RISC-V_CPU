@@ -45,6 +45,11 @@
 
 #define MEM_OPCODE_W            bitsizeof(enum mem_ops)
 
+// For branch and jump
+#define MEM_BRANCHOP_W          bitsizeof(enum branchop)
+#define RFWT_OPS_W              bitsizeof(enum rfwt_ops)
+#define BRADD_OPS_W             bitsizeof(enum bradd_ops)
+
 // -------------------------------------------------------------------------------------------------
 // Defines
 // -------------------------------------------------------------------------------------------------
@@ -122,10 +127,30 @@ enum mem_ops
     MEM_NOP             // Not a memory operation
 };
 
+// For branches and jumps
+enum rfwt_ops
+{
+    WB_ALU,             // Selects the output from the ALU
+    WB_PC,              // Selects the PC+4
+};
+
+enum bradd_ops
+{
+    BRADD_ADDR,         // Branch address is from PC + IMM (branch & JAL)
+    BRADD_ALU,          // Branch address is from ALU output (JALR)
+};
 
 // -------------------------------------------------------------------------------------------------
 // ME stage
 // -------------------------------------------------------------------------------------------------
+
+enum branchop
+{
+    BRANCH_FALSE,               // Never branch
+    BRANCH_TRUE,                // Always Branch (Jump)
+    BRANCH_COND_FALSE,          // Branch if  ALU_zero
+    BRANCH_COND_TRUE,           // Branch if !ALU_zero
+};
 
 // -------------------------------------------------------------------------------------------------
 // WB stage
