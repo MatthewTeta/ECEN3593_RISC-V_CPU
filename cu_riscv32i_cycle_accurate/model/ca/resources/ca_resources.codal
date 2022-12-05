@@ -99,12 +99,14 @@ signal bit[RFWT_OPS_W]      s_id_rfwt;                  // Used to select ALU ou
 // Instruction forwarding
 signal bit[RFF_W]           s_id_rff1_sel;
 signal bit[RFF_W]           s_id_rff2_sel;
-signal bit[RFF_W]           s_id_rff1_val;
-signal bit[RFF_W]           s_id_rff2_val;
+signal bit[WORD_W]          s_id_rff1_val;
+signal bit[WORD_W]          s_id_rff2_val;
 
 // ID pipeline register
 register bit[ADDR_W]            r_id_pc                 { pipeline = pipe.ID; };    // Program Counter
 register bit[RF_XPR_W]          r_id_rd                 { pipeline = pipe.ID; };    // rd (write) register number
+register bit[RF_XPR_W]          r_id_src1               { pipeline = pipe.ID; };    // rd (write) register number
+register bit[RF_XPR_W]          r_id_src2               { pipeline = pipe.ID; };    // rd (write) register number
 register bit[WORD_W]            r_id_rf_src1            { pipeline = pipe.ID; };    // register file output for src1, rs1
 register bit[WORD_W]            r_id_rf_src2            { pipeline = pipe.ID; };    // register file output for src2, rs2
 register bit[BOOLEAN_BIT]       r_id_regwrite           { pipeline = pipe.ID; };    // RF write? r_id_regwrite

@@ -28,7 +28,6 @@
 #include "ca_defines.hcodal"
 #include "config.hcodal"
 
-
 // -------------------------------------------------------------------------------------------------
 // Decode stage
 // -------------------------------------------------------------------------------------------------
@@ -85,6 +84,7 @@ event id : pipeline(pipe.ID) {
     // Use the concatanation operator :: to create the desired fields from the
     // instruction field if required
     s_id_src1 = s_id_instr[19..15];
+    // s_id_src1 = 4;
 
     // address for src2
     // Use the concatanation operator :: to create the desired fields from the
@@ -106,13 +106,9 @@ event id : pipeline(pipe.ID) {
     s_id_imm_itype = (int32)(int12)(s_id_instr[31..20]);
     s_id_imm_stype = (int32)(int12)(s_id_instr[31..25] ::s_id_instr[11..7]);
     s_id_imm_btype =
-        (int32)(int13)(s_id_instr[31..31] ::s_id_instr[7..7] ::s_id_instr
-                           [30..25] ::s_id_instr[11..8] ::(uint1)0);
-    s_id_imm_utype = (int32)(s_id_instr[31..12] ::(uint12)0);
-    s_id_imm_jtype =
-        (int32)(int21)(s_id_instr[31..31] ::s_id_instr[19..12] ::s_id_instr
-                           [20..20] ::s_id_instr[30..25] ::s_id_instr[24..21] ::
-                               (uint1)0);
+        (int32)(int13)(s_id_instr[31..31] ::s_id_instr[7..7] ::s_id_instr[30..25] ::s_id_instr[11..8] ::(uint1)0);
+    s_id_imm_utype = (int32)(int20)(s_id_instr[31..12]) << 12;
+    s_id_imm_jtype = (int32)(int20)(s_id_instr[31..31] ::s_id_instr[19..12] ::s_id_instr[20..20] ::s_id_instr[30..21] ::(uint1)0);
 
     // Register file read for src1 and src2 operands.  Similar to the immediate
     // decode, both src1 and src2 values will be read in parallel from the
@@ -140,42 +136,18 @@ event id : pipeline(pipe.ID) {
     s_id_rf_src2 = rf_xpr.src2[s_id_src2];
 
     // Determine if we should forward data
-    if ((r_mem_rd == r_id_rf_src1) && (r_mem_rd != 0) && (r_mem_regwrite == true)) {
-        s_id_rff1_sel = RFF_WB;
+    if ((r_mem_rd == s_id_src1) && (r_mem_rd != 0) &&
+        (r_mem_regwrite == true)) {
+      s_id_rff1_sel = RFF_WB;
     } else {
-        s_id_rff1_sel = RFF_REG;
+      s_id_rff1_sel = RFF_REG;
     }
 
-    if ((r_mem_rd == r_id_rf_src2) && (r_mem_rd !=0) && (r_mem_regwrite == true)) { 
-        s_id_rff2_sel = RFF_WB;  
-    }
-    else{
-        s_id_rff2_sel = RFF_REG;
-    }
-
-    // Select the src's based on the selects
-    switch (s_id_rff1_sel) {
-        case RFF_WB:
-            s_id_rff1_val = r_mem_alu_result;
-            break;
-        case RFF_REG:
-            s_id_rff1_val = s_id_rf_src1;
-            break;
-        default:
-            s_id_rff1_val = 0;
-            break;
-    }
-
-    switch (s_id_rff2_sel) {
-        case RFF_WB:
-            s_id_rff2_val = r_mem_alu_result;
-            break;
-        case RFF_REG:
-            s_id_rff2_val = s_id_rf_src2;
-            break;
-        default:
-            s_id_rff2_val = 0;
-            break;
+    if ((r_mem_rd == s_id_src2) && (r_mem_rd != 0) &&
+        (r_mem_regwrite == true)) {
+      s_id_rff2_sel = RFF_WB;
+    } else {
+      s_id_rff2_sel = RFF_REG;
     }
 
     // Preserve the current instruction decoded
@@ -247,26 +219,26 @@ event id_output : pipeline(pipe.ID) {
     // that you added in the previous step of this assignment.
 
     switch (s_id_imm_gen_sel) {
-        case RTYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_rtype;
-        break;
-        case ITYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_itype;
-        break;
-        case STYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_stype;
-        break;
-        case BTYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_btype;
-        break;
-        case UTYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_utype;
-        break;
-        case JTYPE_IMM_SEL:
-        r_id_src2_imm = s_id_imm_jtype;
-        break;
-        default:
-        break;
+    case RTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_rtype;
+      break;
+    case ITYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_itype;
+      break;
+    case STYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_stype;
+      break;
+    case BTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_btype;
+      break;
+    case UTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_utype;
+      break;
+    case JTYPE_IMM_SEL:
+      r_id_src2_imm = s_id_imm_jtype;
+      break;
+    default:
+      break;
     }
 
     // Passing data-path and control-signals to the next stage, EX, through the
@@ -279,6 +251,31 @@ event id_output : pipeline(pipe.ID) {
     // here:
 
     r_id_pc = r_if_pc;
+
+    // Select the src's based on the selects
+    switch (s_id_rff1_sel) {
+    case RFF_WB:
+      s_id_rff1_val = r_mem_alu_result;
+      break;
+    case RFF_REG:
+      s_id_rff1_val = s_id_rf_src1;
+      break;
+    default:
+      s_id_rff1_val = 4;
+      break;
+    }
+
+    switch (s_id_rff2_sel) {
+    case RFF_WB:
+      s_id_rff2_val = r_mem_alu_result;
+      break;
+    case RFF_REG:
+      s_id_rff2_val = s_id_rf_src2;
+      break;
+    default:
+      s_id_rff2_val = 4;
+      break;
+    }
 
     // Use the register file ouptput for src1 ID pipeline register you declared
     // in ca_resources.codal What signal from the id (Instruction Decode) event
@@ -303,6 +300,8 @@ event id_output : pipeline(pipe.ID) {
     // assignment here:
 
     r_id_rd = s_id_rd;
+    r_id_src1 = s_id_src1;
+    r_id_src2 = s_id_src2;
 
     // In the RISCV architecture, register 0 is a special register that will
     // always read 0 which implies that it is a read-only register of value 0.

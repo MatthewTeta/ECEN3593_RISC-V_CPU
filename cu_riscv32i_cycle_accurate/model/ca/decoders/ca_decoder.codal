@@ -7,16 +7,17 @@
  *
  * All Rights Reserved.
  *
- * NOTICE: All information contained in this file, is and shall remain the property of
- * Codasip s.r.o. and its suppliers, if any.
+ * NOTICE: All information contained in this file, is and shall remain the
+ * property of Codasip s.r.o. and its suppliers, if any.
  *
- * The intellectual and technical concepts contained herein are confidential and proprietary to
- * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
- * technical concepts may be patent pending.
+ * The intellectual and technical concepts contained herein are confidential and
+ * proprietary to Codasip s.r.o. and are protected by trade secret and copyright
+ * law.  In addition, elements of the technical concepts may be patent pending.
  *
- * This file is part of the Codasip Studio product. No part of the Studio product, including this
- * file, may be use, copied, modified, or distributed except in accordance with the terms contained
- * in Codasip license agreement under which you obtained this file.
+ * This file is part of the Codasip Studio product. No part of the Studio
+ * product, including this file, may be use, copied, modified, or distributed
+ * except in accordance with the terms contained in Codasip license agreement
+ * under which you obtained this file.
  *
  *  \file   ca_decoder.codal
  *  \author Codasip
@@ -25,22 +26,16 @@
  */
 
 #include "ca_defines.hcodal"
-#include "opcodes.hcodal"
-#include "config.hcodal"
 #include "common_enums.hcodal"
+#include "config.hcodal"
+#include "opcodes.hcodal"
 
 // -------------------------------------------------------------------------------------------------
 // Decoder
 // -------------------------------------------------------------------------------------------------
 
-set inst_decode =   i_hw_halt,
-                    i_hw_itype_alu, 
-                    i_hw_rtype_alu,
-                    i_hw_rtype_shift,
-                    i_hw_btype_branches, 
-                    i_hw_jtype_jlink, 
-                    i_hw_itype_jlreg;
-
+set inst_decode = i_hw_halt, i_hw_itype_alu, i_hw_rtype_alu, i_hw_rtype_shift,
+    i_hw_btype_branches, i_hw_jtype_jlink, i_hw_itype_jlreg;
 
 // -------------------------------------------------------------------------------------------------
 // Halt instruction
@@ -48,516 +43,492 @@ set inst_decode =   i_hw_halt,
 
 // This instruction has no operands.
 
-element i_hw_halt
-{
-    use opc_halt as opc;
+element i_hw_halt {
+  use opc_halt as opc;
 
-    assembly { opc };
-    binary { opc };
+  assembly{opc};
+  binary{opc};
 
-    semantics
-    {
-        // Register file write enable
-        s_id_regwrite = false;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = false;
 
-        // Operations
-        s_id_aluop = ALU_NOP;
+    // Operations
+    s_id_aluop = ALU_NOP;
 
-        // Operand MUXes
-        s_id_alusrc1 = DONT_CARE;
-        s_id_alusrc2 = DONT_CARE;
+    // Operand MUXes
+    s_id_alusrc1 = DONT_CARE;
+    s_id_alusrc2 = DONT_CARE;
 
-        // IMMEDIATE MUX select lines
-        s_id_imm_gen_sel = DONT_CARE;
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = DONT_CARE;
 
-        // Is this a branch instruction to take a branch if branch taken
-        s_id_branchop = BRANCH_FALSE;
-        s_id_jump_inst = false;
-        s_id_rfwt = WB_ALU;
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = BRANCH_FALSE;
+    s_id_jump_inst = false;
+    s_id_rfwt = WB_ALU;
 
-        // Load / store control signals
-        s_id_mem_ops = MEM_NOP;
-        s_id_memread = false;
+    // Load / store control signals
+    s_id_mem_ops = MEM_NOP;
+    s_id_memread = false;
 
-        // HALT Command
-        s_id_halt = true;
-    };
+    // HALT Command
+    s_id_halt = true;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // Immediate Arithmetic instructions
 // -------------------------------------------------------------------------------------------------
 
-element i_hw_itype_alu
-{
-    use opc_itype_alu as opc;
+element i_hw_itype_alu {
+  use opc_itype_alu as opc;
 
-    assembly { opc };
-    binary { opc };
+  assembly{opc};
+  binary{opc};
 
-    semantics
-    {
-        // Register file write enable
-        s_id_regwrite = true;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = true;
 
-        // This switch statement assigns the alu operation to be performed by this instruction
-        switch (opc)
-        {
-            case ITYPE_ADDI:
-                s_id_aluop = ALU_ADD;
-                break;
-           case ITYPE_SLTI:
-                s_id_aluop = ALU_SLT;
-                break;
-           case ITYPE_SLTIU:
-                s_id_aluop = ALU_SLTU;
-                break;
-           case ITYPE_XORI:
-                s_id_aluop = ALU_XOR;
-                break;
-           case ITYPE_ORI:
-                s_id_aluop = ALU_OR;
-                break;
-           case ITYPE_ANDI:
-                s_id_aluop = ALU_AND;
-                break;
-            default:
-//                codasip_fatal(ALU_ERROR, "ALU Immediate Decoder case: %d\n", opc);
-                break;
-        };
-
-        // Operand MUXes
-        s_id_alusrc1 = ALU_SRC1_SEL_RF;
-        s_id_alusrc2 = ALU_SRC2_SEL_IMM;
-
-        // IMMEDIATE MUX select lines
-        s_id_imm_gen_sel = ITYPE_IMM_SEL;
-
-        // Is this a branch instruction to take a branch if branch taken
-        s_id_branchop = BRANCH_FALSE;
-        s_id_jump_inst = false;
-        s_id_rfwt = WB_ALU;
-
-        // Load / store control signals
-        s_id_mem_ops = MEM_NOP;
-        s_id_memread = false;
-
-        // HALT Command
-        s_id_halt = false;
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
+    switch (opc) {
+    case ITYPE_ADDI:
+      s_id_aluop = ALU_ADD;
+      break;
+    case ITYPE_SLTI:
+      s_id_aluop = ALU_SLT;
+      break;
+    case ITYPE_SLTIU:
+      s_id_aluop = ALU_SLTU;
+      break;
+    case ITYPE_XORI:
+      s_id_aluop = ALU_XOR;
+      break;
+    case ITYPE_ORI:
+      s_id_aluop = ALU_OR;
+      break;
+    case ITYPE_ANDI:
+      s_id_aluop = ALU_AND;
+      break;
+    default:
+      //                codasip_fatal(ALU_ERROR, "ALU Immediate Decoder case:
+      //                %d\n", opc);
+      break;
     };
+
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_IMM;
+
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = ITYPE_IMM_SEL;
+
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = BRANCH_FALSE;
+    s_id_jump_inst = false;
+    s_id_rfwt = WB_ALU;
+
+    // Load / store control signals
+    s_id_mem_ops = MEM_NOP;
+    s_id_memread = false;
+
+    // HALT Command
+    s_id_halt = false;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // Arithmetic instructions
 // -------------------------------------------------------------------------------------------------
 
-element i_hw_rtype_alu
-{
-   use opc_rtype_alu as opc;
+element i_hw_rtype_alu {
+  use opc_rtype_alu as opc;
 
-   assembly { opc };
-   binary { opc };
+  assembly{opc};
+  binary{opc};
 
-   semantics
-   {
-       // Register file write enable
-       s_id_regwrite = true;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = true;
 
-       // This switch statement assigns the alu operation to be performed by this instruction
-       switch (opc)
-       {
-            case RTYPE_ADD:
-                s_id_aluop = ALU_ADD;
-                break;
-            case RTYPE_SUB:
-                s_id_aluop = ALU_SUB;
-                break;
-            case RTYPE_SLL:
-                s_id_aluop = ALU_SLL;
-                break;
-            case RTYPE_SLT:
-                s_id_aluop = ALU_SLT;
-                break;
-            case RTYPE_SLTU:
-                s_id_aluop = ALU_SLTU;
-                break;
-            case RTYPE_XOR:
-                s_id_aluop = ALU_XOR;
-                break;
-            case RTYPE_SRL:
-                s_id_aluop = ALU_SRL;
-                break;
-            case RTYPE_SRA:
-                s_id_aluop = ALU_SRA;
-                break;
-            case RTYPE_OR:
-                s_id_aluop = ALU_OR;
-                break;
-            case RTYPE_AND:
-                s_id_aluop = ALU_AND;
-                break;
-           default:
-                break;
-       };
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
+    switch (opc) {
+    case RTYPE_ADD:
+      s_id_aluop = ALU_ADD;
+      break;
+    case RTYPE_SUB:
+      s_id_aluop = ALU_SUB;
+      break;
+    case RTYPE_SLL:
+      s_id_aluop = ALU_SLL;
+      break;
+    case RTYPE_SLT:
+      s_id_aluop = ALU_SLT;
+      break;
+    case RTYPE_SLTU:
+      s_id_aluop = ALU_SLTU;
+      break;
+    case RTYPE_XOR:
+      s_id_aluop = ALU_XOR;
+      break;
+    case RTYPE_SRL:
+      s_id_aluop = ALU_SRL;
+      break;
+    case RTYPE_SRA:
+      s_id_aluop = ALU_SRA;
+      break;
+    case RTYPE_OR:
+      s_id_aluop = ALU_OR;
+      break;
+    case RTYPE_AND:
+      s_id_aluop = ALU_AND;
+      break;
+    default:
+      break;
+    };
 
-       // Operand MUXes
-       s_id_alusrc1 = ALU_SRC1_SEL_RF;
-       s_id_alusrc2 = ALU_SRC2_SEL_RF;
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_RF;
 
-       // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = DONT_CARE;
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = DONT_CARE;
 
-       // Is this a branch instruction to take a branch if branch taken
-       s_id_branchop =   false;
-       s_id_jump_inst =     false;
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = false;
+    s_id_jump_inst = false;
 
-       // Load / store control signals
-       s_id_mem_ops = false;
-       s_id_memread = false;
+    // Load / store control signals
+    s_id_mem_ops = false;
+    s_id_memread = false;
 
-       // HALT Command
-       s_id_halt = false;
-   };
+    // HALT Command
+    s_id_halt = false;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // Rtype Immediate shift instructions
 // -------------------------------------------------------------------------------------------------
 
-element i_hw_rtype_shift
-{
-   use opc_rtype_shift as opc;
+element i_hw_rtype_shift {
+  use opc_rtype_shift as opc;
 
-   assembly { opc };
-   binary { opc };
+  assembly{opc};
+  binary{opc};
 
-   semantics
-   {
-       // Register file write enable
-       s_id_regwrite = true;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = true;
 
-       // This switch statement assigns the alu operation to be performed by this instruction
-       switch (opc)
-       {
-            case RTYPE_SLLI:
-                s_id_aluop = ALU_SLL;
-                break;
-            case RTYPE_SRLI:
-                s_id_aluop = ALU_SRL;
-                break;
-            case RTYPE_SRAI:
-                s_id_aluop = ALU_SRA;
-                break;
-           default:
-                break;
-       };
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
+    switch (opc) {
+    case RTYPE_SLLI:
+      s_id_aluop = ALU_SLL;
+      break;
+    case RTYPE_SRLI:
+      s_id_aluop = ALU_SRL;
+      break;
+    case RTYPE_SRAI:
+      s_id_aluop = ALU_SRA;
+      break;
+    default:
+      break;
+    };
 
-       // Operand MUXes
-       s_id_alusrc1 = ALU_SRC1_SEL_RF;
-       s_id_alusrc2 = ALU_SRC2_SEL_IMM;
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_IMM;
 
-       // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = ITYPE_IMM_SEL;
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = ITYPE_IMM_SEL;
 
-       // Is this a branch instruction to take a branch if branch taken
-       s_id_branchop = BRANCH_FALSE;
-       s_id_jump_inst = false;
-       s_id_rfwt = WB_ALU;
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = BRANCH_FALSE;
+    s_id_jump_inst = false;
+    s_id_rfwt = WB_ALU;
 
-       // Load / store control signals
-       s_id_mem_ops = false;
-       s_id_memread = false;
+    // Load / store control signals
+    s_id_mem_ops = false;
+    s_id_memread = false;
 
-       // HALT Command
-       s_id_halt = false;
-   };
+    // HALT Command
+    s_id_halt = false;
+  };
 };
-
 
 // -------------------------------------------------------------------------------------------------
 // Branch instructions
 // -------------------------------------------------------------------------------------------------
 
-element i_hw_btype_branches
-{
-   use opc_btype_branches as opc;
+element i_hw_btype_branches {
+  use opc_btype_branches as opc;
 
-   assembly { opc };
-   binary { opc };
+  assembly{opc};
+  binary{opc};
 
-   semantics
-   {
-       // Register file write enable
-       s_id_regwrite = false;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = false;
 
-       // This switch statement assigns the alu operation to be performed by this instruction
-       switch (opc)
-       {
-            case BEQ:
-                s_branchop = BRANCH_COND_TRUE;
-                s_id_aluop = ALU_SUB;
-                break;
-            case BNE:
-                s_branchop = BRANCH_COND_FALSE;
-                s_id_aluop = ALU_SUB;
-                break;
-            case BLT:
-                s_branchop = BRANCH_COND_FALSE;
-                s_id_aluop = ALU_SLT;
-                break;
-            case BLTU:
-                s_branchop = BRANCH_COND_FALSE;
-                s_id_aluop = ALU_SLTU;
-                break;
-            case BGE:
-                s_branchop = BRANCH_COND_TRUE;
-                s_id_aluop = ALU_BGE;
-                break;
-            case BGEU:
-                s_branchop = BRANCH_COND_TRUE;
-                s_id_aluop = ALU_BGEU;
-                break;
-            default:
-                break;
-       };
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
+    switch (opc) {
+    case BTYPE_BEQ:
+      s_id_branchop = BRANCH_COND_TRUE;
+      s_id_aluop = ALU_SUB;
+      break;
+    case BTYPE_BNE:
+      s_id_branchop = BRANCH_COND_FALSE;
+      s_id_aluop = ALU_SUB;
+      break;
+    case BTYPE_BLT:
+      s_id_branchop = BRANCH_COND_FALSE;
+      s_id_aluop = ALU_SLT;
+      break;
+    case BTYPE_BLTU:
+      s_id_branchop = BRANCH_COND_FALSE;
+      s_id_aluop = ALU_SLTU;
+      break;
+    case BTYPE_BGE:
+      s_id_branchop = BRANCH_COND_TRUE;
+      s_id_aluop = ALU_SLT;
+      break;
+    case BTYPE_BGEU:
+      s_id_branchop = BRANCH_COND_TRUE;
+      s_id_aluop = ALU_SLTU;
+      break;
+    default:
+      break;
+    };
 
-       // Operand MUXes
-       s_id_alusrc1 = ALU_SRC1_SEL_RF;
-       s_id_alusrc2 = ALU_SRC2_SEL_RF;
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_RF;
 
-       // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = BTYPE_IMM_SEL
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = BTYPE_IMM_SEL;
 
-       // Is this a branch instruction to take a branch if branch taken
-       s_id_branchop = BRADD_ADDR
-       s_id_jump_inst = false;
+    // Is this a branch instruction to take a branch if branch taken
+    //    s_id_branchop = BRADD_ADDR;
+    s_id_jump_inst = false;
 
-       // Load / store control signals
-       s_id_mem_ops = false;
-       s_id_memread = false;
+    // Load / store control signals
+    s_id_mem_ops = false;
+    s_id_memread = false;
 
-       // HALT Command
-       s_id_halt = false;
-   };
+    // HALT Command
+    s_id_halt = false;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // LIU and AUIPC and LUI instructions
 // -------------------------------------------------------------------------------------------------
 
-//element i_hw_utype_ops
+// element i_hw_utype_ops
 //{
-//    use opc_utype_ops as opc;
+//     use opc_utype_ops as opc;
 //
-//    assembly { opc };
-//    binary { opc };
+//     assembly { opc };
+//     binary { opc };
 //
-//    semantics
-//    {
-//        // Register file write enable
-//        s_id_regwrite =
+//     semantics
+//     {
+//         // Register file write enable
+//         s_id_regwrite =
 //
-//        // This switch statement assigns the alu operation to be performed by this instruction
-//        switch (opc)
-//        {
+//         // This switch statement assigns the alu operation to be performed by
+//         this instruction switch (opc)
+//         {
 //
-//        };
+//         };
 //
-//        // Operand MUXes
-//        s_id_alusrc2 =
+//         // Operand MUXes
+//         s_id_alusrc2 =
 //
-//        // IMMEDIATE MUX select lines
-//        s_id_imm_gen_sel =
+//         // IMMEDIATE MUX select lines
+//         s_id_imm_gen_sel =
 //
-//        // Is this a branch instruction to take a branch if branch taken
-//        s_id_branchop =
-//        s_id_jump_inst =
+//         // Is this a branch instruction to take a branch if branch taken
+//         s_id_branchop =
+//         s_id_jump_inst =
 //
-//        // Load / store control signals
-//        s_id_mem_ops =
-//        s_id_memread =
+//         // Load / store control signals
+//         s_id_mem_ops =
+//         s_id_memread =
 //
-//        // HALT Command
-//        s_id_halt =
-//    };
-//};
+//         // HALT Command
+//         s_id_halt =
+//     };
+// };
 
 // -------------------------------------------------------------------------------------------------
 // JAL instruction
 // -------------------------------------------------------------------------------------------------
 
-element i_hw_jtype_jlink
-{
-   use opc_jtype_jlink as opc;
+element i_hw_jtype_jlink {
+  use opc_jtype_jlink as opc;
 
-   assembly { opc };
-   binary { opc };
+  assembly{opc};
+  binary{opc};
 
-   semantics
-   {
-       // Register file write enable
-       s_id_regwrite = true;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = true;
 
-       // This switch statement assigns the alu operation to be performed by this instruction
-       switch (opc)
-       {
-           case JAL:
-                s_id_aluop = DONT_CARE;
-                break;
-           default:
-                break;
-       };
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
+    s_id_aluop = DONT_CARE;
 
-       // Operand MUXes
-       s_id_alusrc1 = DONT_CARE;
-       s_id_alusrc2 = DONT_CARE;
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_RF;
 
-       // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = UJTYPE_IMM_SEL;
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = JTYPE_IMM_SEL;
 
-       // Is this a branch instruction to take a branch if branch taken
-       s_id_branchop = true;
-       s_id_jump_inst = false;
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = BRANCH_TRUE;
+    s_id_jump_inst = false;
+    s_id_rfwt = WB_PC;
 
-       // Load / store control signals
-       s_id_mem_ops = false;
-       s_id_memread = false;
+    // Load / store control signals
+    s_id_mem_ops = false;
+    s_id_memread = false;
 
-       // HALT Command
-       s_id_halt = false;
-   };
+    // HALT Command
+    s_id_halt = false;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // JALR instruction
 // -------------------------------------------------------------------------------------------------
-element i_hw_itype_jlreg
-{
-   use opc_itype_jlreg as opc;
+element i_hw_itype_jlreg {
+  use opc_itype_jlreg as opc;
 
-   assembly { opc };
-   binary { opc };
+  assembly{opc};
+  binary{opc};
 
-   semantics
-   {
-       // Register file write enable
-       s_id_regwrite = true;
+  semantics {
+    // Register file write enable
+    s_id_regwrite = true;
 
-       // This switch statement assigns the alu operation to be performed by this instruction
-       switch (opc)
-       {
-           case JALR:
-                s_id_aluop = ALU_ADD;
-                break;
-           default:
-                break;
-       };
+    // This switch statement assigns the alu operation to be performed by this
+    // instruction
 
-       // Operand MUXes
-       s_id_alusrc1 = ALU_SRC1_SEL_RF;
-       s_id_alusrc2 = ALU_SRC1_SEL_IMM;
+    s_id_aluop = ALU_ADD;
 
-       // IMMEDIATE MUX select lines
-       s_id_imm_gen_sel = JTYPE_IMM_SEL;
+    // Operand MUXes
+    s_id_alusrc1 = ALU_SRC1_SEL_RF;
+    s_id_alusrc2 = ALU_SRC2_SEL_IMM;
 
-       // Is this a branch instruction to take a branch if branch taken
-       s_id_branchop = false;
-       s_id_jump_inst = true;
+    // IMMEDIATE MUX select lines
+    s_id_imm_gen_sel = ITYPE_IMM_SEL;
 
-       // Load / store control signals
-       s_id_mem_ops = false;
-       s_id_memread = false;
+    // Is this a branch instruction to take a branch if branch taken
+    s_id_branchop = BRANCH_TRUE;
+    s_id_jump_inst = true;
+    s_id_rfwt = WB_PC;
 
-       // HALT Command
-       s_id_halt = false;
-   };
+    // Load / store control signals
+    s_id_mem_ops = false;
+    s_id_memread = false;
+
+    // HALT Command
+    s_id_halt = false;
+  };
 };
 
 // -------------------------------------------------------------------------------------------------
 // load instructions
 // -------------------------------------------------------------------------------------------------
 
-//element i_hw_itype_loads
+// element i_hw_itype_loads
 //{
-//    use opc_itype_loads as opc;
+//     use opc_itype_loads as opc;
 //
-//    assembly { opc };
-//    binary { opc };
+//     assembly { opc };
+//     binary { opc };
 //
-//    semantics
-//    {
-//        // Register file write enable
-//        s_id_regwrite =
+//     semantics
+//     {
+//         // Register file write enable
+//         s_id_regwrite =
 //
-//        // Assign the aluop opcode to perform the address calculation
-//        s_id_aluop =
+//         // Assign the aluop opcode to perform the address calculation
+//         s_id_aluop =
 //
-//        // This switch statement assigns the alu operation to be performed by this instruction
-//        switch (opc)
-//        {
+//         // This switch statement assigns the alu operation to be performed by
+//         this instruction switch (opc)
+//         {
 //
-//        };
+//         };
 //
-//        // Operand MUXes
-//        s_id_alusrc1 =
-//        s_id_alusrc2 =
+//         // Operand MUXes
+//         s_id_alusrc1 =
+//         s_id_alusrc2 =
 //
-//        // IMMEDIATE MUX select lines
-//        s_id_imm_gen_sel =
+//         // IMMEDIATE MUX select lines
+//         s_id_imm_gen_sel =
 //
-//        // Is this a branch instruction to take a branch if branch taken
-//        s_id_branchop =
-//        s_id_jump_inst =
+//         // Is this a branch instruction to take a branch if branch taken
+//         s_id_branchop =
+//         s_id_jump_inst =
 //
-//        // Load / store control signals
-//        s_id_memread =
+//         // Load / store control signals
+//         s_id_memread =
 //
-//        // HALT Command
-//        s_id_halt =
-//    };
-//};
-
+//         // HALT Command
+//         s_id_halt =
+//     };
+// };
 
 // -------------------------------------------------------------------------------------------------
 // store instructions
 // -------------------------------------------------------------------------------------------------
 
-//element i_hw_stype_store
+// element i_hw_stype_store
 //{
-//    use opc_stype_store as opc;
+//     use opc_stype_store as opc;
 //
-//    assembly { opc };
-//    binary { opc };
+//     assembly { opc };
+//     binary { opc };
 //
-//    semantics
-//    {
-//        // Register file write enable
-//        s_id_regwrite =
+//     semantics
+//     {
+//         // Register file write enable
+//         s_id_regwrite =
 //
-//        // Assign the aluop opcode to perform the address calculation
-//        s_id_aluop =
+//         // Assign the aluop opcode to perform the address calculation
+//         s_id_aluop =
 //
-//        // This switch statement assigns the alu operation to be performed by this instruction
-//        switch (opc)
-//        {
+//         // This switch statement assigns the alu operation to be performed by
+//         this instruction switch (opc)
+//         {
 //
-//        };
+//         };
 //
-//        // Operand MUXes
-//        s_id_alusrc1 =
-//        s_id_alusrc2 =
+//         // Operand MUXes
+//         s_id_alusrc1 =
+//         s_id_alusrc2 =
 //
-//        // IMMEDIATE MUX select lines
-//        s_id_imm_gen_sel =
+//         // IMMEDIATE MUX select lines
+//         s_id_imm_gen_sel =
 //
-//        // Is this a branch instruction to take a branch if branch taken
-//        s_id_branchop =
-//        s_id_jump_inst =
+//         // Is this a branch instruction to take a branch if branch taken
+//         s_id_branchop =
+//         s_id_jump_inst =
 //
-//        // Load / store control signals
-//        s_id_memread =
+//         // Load / store control signals
+//         s_id_memread =
 //
-//        // HALT Command
-//        s_id_halt =
-//    };
-//};
+//         // HALT Command
+//         s_id_halt =
+//     };
+// };

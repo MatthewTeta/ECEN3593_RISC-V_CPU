@@ -67,7 +67,7 @@
 // -------------------------------------------------------------------------------------------------
 enum imm_gen_mux        // Select lines for generating the proper immediate to pass to the execute stage
 {
-    RTYPE_IMM_SEL,
+    RTYPE_IMM_SEL = 0,
     ITYPE_IMM_SEL,
     STYPE_IMM_SEL,
     BTYPE_IMM_SEL,
@@ -77,7 +77,7 @@ enum imm_gen_mux        // Select lines for generating the proper immediate to p
 
 enum rff_fwd
 {
-    RFF_REG,
+    RFF_REG = 0,
     RFF_WB,
 };
 
