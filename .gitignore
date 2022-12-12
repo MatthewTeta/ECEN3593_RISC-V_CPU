@@ -4,3 +4,4 @@
 **/tmp
 sim_exit_code
 cu_riscv32i_cycle_accurate/work
+cu_riscv32i_cycle_accurate/studioincloud-config.json
