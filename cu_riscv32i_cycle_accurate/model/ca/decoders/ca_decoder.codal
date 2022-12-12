@@ -33,9 +33,8 @@
 // -------------------------------------------------------------------------------------------------
 // Decoder
 // -------------------------------------------------------------------------------------------------
-
 set inst_decode = i_hw_halt, i_hw_itype_alu, i_hw_rtype_alu, i_hw_rtype_shift,
-    i_hw_btype_branches, i_hw_jtype_jlink, i_hw_itype_jlreg;
+    i_hw_btype_branches, i_hw_jtype_jlink, i_hw_itype_jlreg, i_hw_utype_ops;
 
 // -------------------------------------------------------------------------------------------------
 // Halt instruction
@@ -330,42 +329,51 @@ element i_hw_btype_branches {
 // LIU and AUIPC and LUI instructions
 // -------------------------------------------------------------------------------------------------
 
-// element i_hw_utype_ops
-//{
-//     use opc_utype_ops as opc;
-//
-//     assembly { opc };
-//     binary { opc };
-//
-//     semantics
-//     {
-//         // Register file write enable
-//         s_id_regwrite =
-//
-//         // This switch statement assigns the alu operation to be performed by
-//         this instruction switch (opc)
-//         {
-//
-//         };
-//
-//         // Operand MUXes
-//         s_id_alusrc2 =
-//
-//         // IMMEDIATE MUX select lines
-//         s_id_imm_gen_sel =
-//
-//         // Is this a branch instruction to take a branch if branch taken
-//         s_id_branchop =
-//         s_id_jump_inst =
-//
-//         // Load / store control signals
-//         s_id_mem_ops =
-//         s_id_memread =
-//
-//         // HALT Command
-//         s_id_halt =
-//     };
-// };
+element i_hw_utype_ops
+{
+    use opc_utype_ops as opc;
+
+    assembly { opc };
+    binary { opc };
+
+    semantics
+    {
+        // Register file write enable
+        s_id_regwrite = true;
+
+        s_id_aluop = ALU_ADD;
+
+        // This switch statement assigns the alu operation to be performed by
+        switch (opc)
+        {
+            case UTYPE_LUI:
+                s_id_alusrc1 = ALU_SRC1_SEL_ZERO;
+                break;
+            case UTYPE_AUIPC:
+                s_id_alusrc1 = ALU_SRC1_SEL_PC;
+                break;
+            default:
+                break;
+        };
+
+        // Operand MUXes
+        s_id_alusrc2 = ALU_SRC2_SEL_IMM;
+
+        // IMMEDIATE MUX select lines
+        s_id_imm_gen_sel = UTYPE_IMM_SEL;
+
+        // Is this a branch instruction to take a branch if branch taken
+        s_id_branchop = BRANCH_FALSE;
+        s_id_jump_inst = false;
+
+        // Load / store control signals
+        s_id_mem_ops = false;
+        s_id_memread = false;
+
+        // HALT Command
+        s_id_halt = false;
+    };
+};
 
 // -------------------------------------------------------------------------------------------------
 // JAL instruction

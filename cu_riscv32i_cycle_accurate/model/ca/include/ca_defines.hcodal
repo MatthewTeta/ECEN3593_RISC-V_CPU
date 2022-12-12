@@ -112,6 +112,8 @@ enum dhf_fwd
 enum alu_src1_sel
 {
     ALU_SRC1_SEL_RF,    // Set output to the register file
+    ALU_SRC1_SEL_ZERO,  // LUI
+    ALU_SRC1_SEL_PC,    // AUIPC
 };
 
 // ALU SRC2 operand mux select lines

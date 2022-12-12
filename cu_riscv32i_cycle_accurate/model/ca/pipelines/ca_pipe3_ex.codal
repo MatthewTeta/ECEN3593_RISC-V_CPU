@@ -99,6 +99,12 @@ event ex : pipeline(pipe.EX) {
     case ALU_SRC1_SEL_RF:
       s_ex_src1_operand = s_ex_src1_val;
       break;
+    case ALU_SRC1_SEL_ZERO:
+      s_ex_src1_operand = (uint32)0;
+      break;
+    case ALU_SRC1_SEL_PC:
+      s_ex_src1_operand = r_id_pc;
+      break;
     default:
       break;
     }
